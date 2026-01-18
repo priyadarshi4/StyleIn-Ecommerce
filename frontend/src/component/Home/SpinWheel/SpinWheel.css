@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --primary-bg: #0f0f0f;
+  --secondary-bg: #1a1a1a;
+  --accent: #ff4d4d;
+  --text: #ffffff;
+  --text-muted: #b5b5b5;
+  --glow: rgba(255, 77, 77, 0.55);
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ================= Overlay ================= */
+.spin-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+/* ================= Card ================= */
+.spin-box {
+  background: linear-gradient(180deg, #121212, #0b0b0b);
+  color: var(--text);
+  width: min(92vw, 420px);
+  padding: 2rem;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  font-family: "Poppins", sans-serif;
+}
+
+.spin-box h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+}
+
+/* ================= Wheel ================= */
+.wheel-area {
+  position: relative;
+  width: min(80vw, 320px);
+  height: min(80vw, 320px);
+  margin: 1.8rem auto;
+}
+
+.wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 25px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(255, 255, 255, 0.08);
+}
+
+/* ================= Segments ================= */
+.wheel-segment {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0% 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.wheel-segment span {
+  transform: rotate(90deg);
+  font-size: clamp(0.75rem, 2vw, 0.95rem);
+  font-weight: 700;
+  color: #000;
+  max-width: 90px;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+  line-height: 1.1;
+}
+
+/* ================= Center Button ================= */
+.wheel-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.wheel-center button {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #ff1a1a);
+  border: 3px solid #fff;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 0 18px var(--glow);
+}
+
+.wheel-center button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ================= Pointer ================= */
+.wheel-pointer {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 24px solid #ffffff;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
+  z-index: 5;
+}
+
+/* ================= Result ================= */
+.result-box {
+  margin-top: 1.2rem;
+  background: var(--secondary-bg);
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow);
+}
+
+.result-box.win {
+  border: 1px solid gold;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+}
+
+/* ================= Close ================= */
+.close {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  margin-top: 1.4rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.close:hover {
+  color: var(--accent);
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 768px) {
+  .spin-box {
+    padding: 1.5rem;
+  }
+  .wheel-area {
+    width: 280px;
+    height: 280px;
+  }
+  .wheel-center button {
+    width: 70px;
+    height: 70px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .spin-box h2 {
+    font-size: 1.2rem;
+  }
+  .wheel-area {
+    width: 250px;
+    height: 250px;
+  }
+  .wheel-segment span {
+    font-size: 0.7rem;
+  }
+}

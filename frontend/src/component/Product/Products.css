@@ -1,0 +1,429 @@
+.productPage{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+/* Top Categories - New Addition */
+.topCategories {
+  width: 100%;
+  max-width: 1800px; /* Limit width for larger screens */
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.329);
+}
+.cartIcon {
+  width: 100px; /* Adjust size as needed */
+  height: 100px;
+}
+.horizontalCategoryBox {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px 0;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #888 #f1f1f1; /* For Firefox */
+}
+
+.horizontalCategoryBox::-webkit-scrollbar {
+  height: 6px; /* Thin scrollbar for webkit browsers */
+}
+
+.horizontalCategoryBox::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.horizontalCategoryBox::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.horizontalCategoryBox::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.horizontalCategoryLabel {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+  min-width: fit-content;
+}
+
+.horizontalCategoryLabel:hover {
+  background-color: #f0f0f0;
+}
+
+.horizontalCategoryLabel input[type="checkbox"] {
+  margin-right: 8px;
+  accent-color: orange;
+}
+
+.prodcutPageTop{
+  display: flex;
+width: auto;
+gap: 1rem;
+  justify-content: space-around;
+
+  margin-bottom: 1rem;
+}
+
+.products {
+ display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+height: fit-content;
+  width: 80%;
+  
+}
+
+.products1{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60vw;
+  
+  margin: 1rem 0;
+
+}
+.filterBox{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  width: 20%;
+ margin: 1rem 0 0 .8rem;
+  background-color: white;
+  border-radius: 5px;
+  box-sizing: border-box;
+  height: fit-content;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.329);
+}
+
+/* Mobile Filters - Outside box */
+.mobileFilters {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  /* No background, border, or box shadow to make it look like not in a box */
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.priceFilter{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.priceSlider{
+  width: 90%;
+}
+.priceSlider .css-187mznn-MuiSlider-root {
+  height: 3px !important;
+    color: #414141 !important;
+}
+
+.priceSelector{
+  display: flex;
+gap: 10px;
+  align-items: center;
+  width: 90%;
+  margin: 10px 0;
+}
+
+.priceOption{
+  width: 90%;
+  height: 2rem;
+}
+
+.toText {
+   font-size: 16px;
+    font-weight: 400;
+    color: #414141;
+}
+.filter_divider{
+  width: 100%;
+  height: .8px;
+  margin: 1.5rem 0;
+  background-color: #d7d5d2d4;
+}
+.menu_item{
+  color: white !important;
+box-shadow: rgb(255, 255, 255) !important;
+}
+
+.ratingsFilter{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  
+}
+.ratingsBox{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 80%;
+  
+}
+.paginationBox {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0 2rem 0; 
+}
+.page-item {
+  background-color: rgb(255, 255, 255);
+  list-style: none;
+  border: 1px solid rgba(0, 0, 0, 0.178);
+  padding: 1vmax 1.5vmax;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.page-item:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.page-item:last-child {
+  border-radius: 0 5px 5px 0;
+}
+.page-link {
+  text-decoration: none;
+  font: 300 .9vmax "Roboto";
+  color: rgb(2, 2, 2);
+  transition: all 0.3s;
+}
+
+.page-item:hover {
+  background-color: #414141;
+}
+
+.page-item:hover .page-link {
+  color: #cc7818d7;
+}
+
+.pageItemActive {
+  background-color:#F7931E;
+}
+
+.pageLinkActive {
+  color: white;
+}
+
+.css-187mznn-MuiSlider-root {
+    color: #170f05 !important;
+    height: 1.2px !important;
+}
+.css-eg0mwd-MuiSlider-thumb {
+  width: 10px    !important;
+  height: 10px      !important;
+}
+
+.css-ahj2mt-MuiTypography-root{
+  text-align: center;
+}
+
+.category-link:hover {
+  color:#F7931E;
+}
+
+.css-1t2bqnt {
+  color: #170f05 !important;
+}
+
+.css-exkjcx {
+  color: #414141 !important;
+}
+
+.filterBox > fieldset {
+  border: 1px solid rgba(0, 0, 0, 0.329);
+}
+
+/* Mobile Pagination Box */
+.paginationBoxMobile {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* Improved UI for Price Slider on Mobile */
+@media screen and (max-width: 600px) {
+  .priceSlider .css-187mznn-MuiSlider-root {
+    height: 6px !important; /* Thicker track for better visibility */
+    color: #F7931E !important; /* Orange color for attractiveness */
+  }
+  .css-eg0mwd-MuiSlider-thumb {
+    width: 20px !important; /* Larger thumb for easier touch */
+    height: 20px !important;
+    background-color: #F7931E !important; /* Match track color */
+    border: 2px solid #fff !important; /* White border for contrast */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important; /* Subtle shadow */
+  }
+  .priceSelector {
+    flex-direction: row; /* Changed to row for horizontal layout: min box to max box */
+    gap: 10px; /* Adjusted gap for horizontal */
+    align-items: center;
+    justify-content: center; /* Center the boxes */
+  }
+  .priceOption {
+    width: 40%; /* Adjusted width for horizontal layout */
+    height: 3rem; /* Taller for easier tapping */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background */
+  }
+  .toText {
+    font-size: 14px;
+    color: #666;
+    margin: 0 5px; /* Small margin for spacing */
+  }
+}
+
+/* Improved UI for Ratings Filter on Mobile */
+@media screen and (max-width: 600px) {
+  .ratingsBox {
+    display: flex;
+    flex-direction: row; /* Horizontal layout for radios */
+    justify-content: space-around;
+    width: 100%;
+    gap: 10px;
+  }
+  .css-1u9des2-MuiFormControlLabel-root { /* Custom radio label */
+    margin: 0;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s;
+  }
+  .css-1u9des2-MuiFormControlLabel-root:hover {
+    background-color: #F7931E;
+    color: white;
+  }
+  .css-1u9des2-MuiFormControlLabel-root .Mui-checked {
+    color: #F7931E !important;
+  }
+}
+
+/* Improved UI for Pagination on Mobile */
+@media screen and (max-width: 600px) {
+  .paginationBoxMobile .page-item {
+    padding: 0.8rem 1rem; /* Larger padding for touch */
+    font-size: 14px; /* Slightly larger font */
+    border-radius: 8px; /* Rounded corners */
+    margin: 0 2px; /* Small gap between items */
+    background-color: #f9f9f9; /* Light background */
+    border: 1px solid #ddd;
+  }
+  .paginationBoxMobile .page-link {
+    font-size: 14px;
+    color: #333;
+  }
+  .paginationBoxMobile .pageItemActive {
+    background-color: #F7931E;
+    color: white;
+    border-color: #F7931E;
+  }
+  .paginationBoxMobile .page-item:hover {
+    background-color: #F7931E;
+    color: white;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .filterBox {
+    width: 30vmax;
+  }
+  .page-link {
+    font: 300 1.2vmax "Roboto";
+  }
+  .products1 {
+    width: 55vw;
+  }
+  .topCategories {
+    max-width: 90%;
+  }
+} 
+
+@media screen and (max-width: 800px) {
+  .filterBox {
+    width: 40vmax;
+  }
+  .products1 {
+    width: 45vw;
+  }
+  .page-link {
+    font: 300 1.5vmax "Roboto";
+  }
+  .horizontalCategoryBox {
+    gap: 8px;
+  }
+  .horizontalCategoryLabel {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .topCategories {
+    max-width: 95%;
+  }
+}
+ 
+@media screen and (max-width: 600px) {
+  .topCategories {
+  
+  max-width: 1200px; /* Limit width for larger screens */
+  
+}
+  .prodcutPageTop{
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .filterBox{
+    width: 60%;
+    margin: 1rem 0 0 0;
+  }
+  .products{
+    width: 100%;
+    margin: -4rem 0 0 0;
+    display: grid; /* Change to grid for 2 products per row */
+    grid-template-columns: repeat(2, 1fr); /* 2 products side by side */
+    gap: 0.5rem; /* Reduced gap for better fit */
+    padding: 0 0rem; /* Reduced padding */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    justify-items: center; /* Center items in grid */
+  }
+  .products1 {
+    width: 100%;
+    margin: 1rem 0 0 0;
+  }
+  .horizontalCategoryBox {
+    gap: 6px;
+  }
+  .horizontalCategoryLabel {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+  .topCategories {
+    max-width: 100%;
+    padding: 0.5rem;
+  }
+}

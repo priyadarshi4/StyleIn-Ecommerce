@@ -1,0 +1,530 @@
+.rootProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #f0f2f5 0%, #e9ecef 100%);
+  min-height: 100vh;
+  padding-top: 5rem;
+  padding-bottom: 2rem;
+  font-family: 'Roboto', sans-serif; /* Assuming Roboto is available; adjust if needed */
+}
+
+.header-root {
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 3rem 0 2.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 30px 30px;
+}
+
+.headingProfile {
+  text-align: center;
+  font-weight: 900 !important;
+  font-size: 30px !important;
+  text-transform: uppercase;
+  color: #333;
+  letter-spacing: 1px;
+}
+
+.profileConatiner {
+  display: flex;
+  justify-content: space-around;
+  width: 97%;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.leftCotainer {
+  max-width: 27vmax;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0;
+}
+
+.greeting {
+  font-size: 16px;
+  color: #555;
+  font-weight: 500 !important;
+  margin-bottom: 1rem;
+}
+
+.profileHeadingLeft {
+  font-size: 1.6rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 1rem !important;
+  color: #212121 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px;
+}
+
+.profileHeading {
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  margin-bottom: 1rem !important;
+  color: #212121 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px;
+}
+
+.profileSection {
+  background: #f9f9f9; /* Same as personal info sections */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem; /* Same padding as personal info */
+  border-radius: 10px; /* Same border radius */
+  margin-bottom: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Same shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profileSection:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.profileAvatar {
+  width: 100px !important;
+  height: 100px !important;
+  margin-bottom: 1rem !important;
+  font-size: 2.5rem !important;
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, #414141 0%, #666 100%) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  border: 4px solid #fff;
+}
+
+.leftDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.profileSubHeading {
+  font-size: 1.1rem !important;
+  color: #333 !important;
+  font-weight: bold !important;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.5px;
+}
+
+.profileText {
+  font-size: 1rem !important;
+  color: #555;
+  text-transform: capitalize; /* Changed to capitalize for better readability */
+  font-weight: 500;
+}
+
+.profileText2 {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500 !important;
+  text-align: center;
+}
+
+.profileText3 {
+  font-size: 0.9rem;
+  color: #777;
+  font-weight: 400;
+  width: 100%;
+  margin-top: 0.5rem;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.myOrder {
+  width: 28vmax;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+  text-align: center;
+  padding: 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 20px !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.myOrder:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.ordersButton {
+  width: 100%;
+  padding: 1rem !important;
+  margin-bottom: 1rem !important;
+  background: linear-gradient(135deg, #414141 0%, #666 100%) !important;
+  color: #fff !important;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(65, 65, 65, 0.3);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.ordersButton:hover {
+  background: linear-gradient(135deg, #F7931E 0%, #ff8c00 100%) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(247, 147, 30, 0.4);
+}
+
+.profileButton {
+  width: 100% !important;
+  padding: 1rem !important;
+  margin: 0.5rem 0 !important;
+  background: linear-gradient(135deg, #414141 0%, #666 100%) !important;
+  color: #fff !important;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(65, 65, 65, 0.3);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.profileButton:hover {
+  background: linear-gradient(135deg, #F7931E 0%, #ff8c00 100%) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(247, 147, 30, 0.4);
+}
+
+.rightConatiner {
+  width: 58vmax;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 3rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rightConatiner:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.righHeadings {
+  padding: 0 0 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.detials {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 1rem;
+}
+
+.detials > div {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.mangeAccount {
+  display: flex;
+  margin-top: 2rem;
+  flex-direction: column;
+  padding: 0;
+  gap: 1rem;
+}
+
+.mangeAccount > div {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Tablet adjustments */
+@media (max-width: 950px) {
+  .profileConatiner {
+    flex-direction: column;
+    max-width: 100%;
+    gap: 1rem;
+  }
+
+  .leftCotainer {
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
+
+  .profileHeadingLeft {
+    width: 100%;
+    text-align: center;
+  }
+
+  .profileHeading {
+    width: 100%;
+  }
+
+  .profileSection {
+    width: 100%;
+  }
+
+  .profileAvatar {
+    width: 120px;
+    height: 120px;
+    font-size: 3rem;
+  }
+
+  .profileText2 {
+    width: 100%;
+  }
+
+  .leftDetails {
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .profileSubHeading {
+    font-size: 1.3rem;
+  }
+
+  .profileText {
+    font-size: 1.2rem;
+  }
+
+  .myOrder {
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .ordersButton {
+    width: 100%;
+    padding: 1.2rem;
+  }
+
+  .rightConatiner {
+    width: 100%;
+    padding: 2rem;
+    margin-top: 1rem;
+  }
+}
+
+/* Phone-specific design with left container styled like right container */
+@media (max-width: 600px) {
+  .rootProfile {
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+    background: linear-gradient(135deg, #f0f2f5 0%, #e9ecef 100%);
+  }
+
+  .header-root {
+    padding: 2rem 1rem 1.5rem;
+    border-radius: 0 0 25px 25px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .headingProfile {
+    font-size: 24px !important;
+    color: #333;
+  }
+
+  .profileConatiner {
+    width: 100%;
+    padding: 0 1rem;
+    gap: 1rem;
+    flex-direction: column;
+  }
+
+  .leftCotainer {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0;
+    order: -1;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); /* Same as right container */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Same shadow */
+    border-radius: 20px; /* Same border radius */
+    padding: 1.5rem; /* Same padding */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .leftCotainer:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  .profileSection {
+    width: 100%;
+    padding: 2rem 1.5rem;
+    border-radius: 15px;
+    background: #f9f9f9;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+  }
+
+  .profileAvatar {
+    width: 140px !important;
+    height: 140px !important;
+    font-size: 3.8rem !important;
+    background: linear-gradient(135deg, #414141 0%, #666 100%) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    border: 6px solid #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .leftDetails {
+    width: 100%;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .profileSubHeading {
+    font-size: 1.3rem !important;
+    color: #333 !important;
+  }
+
+  .profileText {
+    font-size: 1.1rem !important;
+    color: #555;
+  }
+
+  .profileText2 {
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .profileText3 {
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .myOrder {
+    width: 100%;
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .ordersButton {
+    width: 100% !important;
+    padding: 1.2rem !important;
+    margin-bottom: 1rem !important;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #414141 0%, #666 100%) !important;
+    box-shadow: 0 6px 20px rgba(65, 65, 65, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .ordersButton:hover {
+    background: linear-gradient(135deg, #F7931E 0%, #ff8c00 100%) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(247, 147, 30, 0.4);
+  }
+
+  .profileButton {
+    width: 100% !important;
+    padding: 1.2rem !important;
+    margin: 0.5rem 0 !important;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #414141 0%, #666 100%) !important;
+    box-shadow: 0 6px 20px rgba(65, 65, 65, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .profileButton:hover {
+    background: linear-gradient(135deg, #F7931E 0%, #ff8c00 100%) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(247, 147, 30, 0.4);
+  }
+
+  .rightConatiner {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1.5rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .righHeadings {
+    padding: 0 0 1rem;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .detials {
+    padding: 0;
+    gap: 1rem;
+  }
+
+  .detials > div {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .mangeAccount {
+    padding: 0;
+    gap: 1rem;
+  }
+
+  .mangeAccount > div {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+  .profileAvatar {
+    width: 120px !important;
+    height: 120px !important;
+    font-size: 3.2rem !important;
+  }
+
+  .headingProfile {
+    font-size: 20px !important;
+  }
+
+  .profileSection {
+    padding: 1.5rem 1rem;
+  }
+
+  .myOrder {
+    padding: 1.5rem 1rem;
+  }
+
+  .rightConatiner {
+    padding: 1rem;
+  }
+
+  .detials > div,
+  .mangeAccount > div {
+    padding: 1rem;
+  }
+}

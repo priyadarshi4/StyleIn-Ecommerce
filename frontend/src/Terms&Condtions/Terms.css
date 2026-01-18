@@ -1,0 +1,109 @@
+/* ===============================
+   TERMS & CONDITIONS – STYLEIN
+================================ */
+
+.terms-container {
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 4rem auto;
+  max-width: 900px;
+  padding: 2.5rem;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  color: #333;
+}
+
+/* ===============================
+   TITLE
+================================ */
+.terms-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #111;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.terms-title::after {
+  content: "";
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #000, #666);
+  display: block;
+  margin-top: 8px;
+  border-radius: 2px;
+}
+
+/* ===============================
+   CONTENT
+================================ */
+.terms-content {
+  margin-top: 1.5rem;
+}
+
+.terms-content p {
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+/* ===============================
+   CONTACT INFO
+================================ */
+.contact-info {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-left: 4px solid #000;
+  border-radius: 8px;
+  font-style: normal;
+}
+
+.contact-info p {
+  margin-bottom: 0.6rem;
+  font-weight: 500;
+  color: #222;
+}
+
+.contact-info p span {
+  font-weight: 400;
+  color: #555;
+}
+
+/* ===============================
+   TABLET VIEW
+================================ */
+@media screen and (max-width: 768px) {
+  .terms-container {
+    font-size: 15px;
+    padding: 1.8rem;
+    margin: 3rem 1rem;
+  }
+
+  .terms-title {
+    font-size: 1.6rem;
+  }
+}
+
+/* ===============================
+   MOBILE VIEW
+================================ */
+@media screen and (max-width: 480px) {
+  .terms-container {
+    font-size: 14px;
+    padding: 1.4rem;
+    border-radius: 14px;
+  }
+
+  .terms-title {
+    font-size: 1.3rem;
+  }
+
+  .contact-info {
+    padding: 1.2rem;
+  }
+}
