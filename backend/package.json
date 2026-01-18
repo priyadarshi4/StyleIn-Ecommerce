@@ -8,8 +8,8 @@
     "dev": "nodemon server.js"
   },
   "engines": {
-    "node": ">=16 <=20"
-  },
+  "node": ">=18"
+},
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.41.0",
