@@ -42,13 +42,17 @@ app.use("/api", contactRoute);
 // Error middleware must come after all routes
 app.use(errorMiddleware);
 
-// Serve static files from the frontend build directory
-const __dirname1 = path.resolve();
-app.use(express.static(path.join(__dirname1, "/frotend/build")));
+// Serve frontend in production only
+if (process.env.NODE_ENV === "production") {
+  const __dirname1 = path.resolve();
+  app.use(express.static(path.join(__dirname1, "frontend", "build")));
 
-// Catch-all handler for React Router (serves index.html for any unmatched routes)
-app.get("*", (req, res) =>
-  res.sendFile(path.resolve(__dirname1, "frotend", "build", "index.html"))
-);
+  app.use((req, res) => {
+    res.sendFile(
+      path.join(__dirname1, "frontend", "build", "index.html")
+    );
+  });
+}
+
 
 module.exports = app;
