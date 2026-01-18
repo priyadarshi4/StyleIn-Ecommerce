@@ -1,28 +1,30 @@
-// this method will take user Data status code and res =>  Then Create Token and will saving in cookie ans send
+// This method creates JWT token, saves it in cookie, and sends response
 
-const sendJWtToken  = (user , statusCode , res) =>{
-   
+const sendJWtToken = (user, statusCode, res) => {
+  // Generate JWT
+  const token = user.getJWTToken();
 
-;
-    const token = user.getJWTToken(); //every user has access all userModel methods
+  // ✅ Cookie options (PRODUCTION READY)
+  const options = {
+    expires: new Date(
+      Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
 
-     // options for cookie
-    const options = {
-        expires: new Date(
-            // expiry date from now to  + process.env.COOKIE_EXPIRE (eg 5day) + convert it mili sec
-            Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-        ),
-        httpOnly: true,
-    };
-    
-    // wrapping all data into cookie eg token and options data
-    
-    res.status(statusCode).cookie("token", token, options).json({
-        success: true,
-        user,
-        token,
+    // 🔥 REQUIRED for Vercel ↔ Render (cross-domain)
+    secure: process.env.NODE_ENV === "production", // HTTPS only in prod
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  };
+
+  // Send cookie + response
+  res
+    .status(statusCode)
+    .cookie("token", token, options)
+    .json({
+      success: true,
+      user,
+      token,
     });
 };
 
 module.exports = sendJWtToken;
-
