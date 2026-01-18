@@ -2,6 +2,10 @@
   "name": "frotend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=16 <=20",
+    "npm": ">=8"
+  },
   "dependencies": {
     "2": "^3.0.0",
     "@emotion/react": "^11.11.1",
