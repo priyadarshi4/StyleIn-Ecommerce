@@ -1,9 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL:
-    process.env.REACT_APP_API_URL ||
-    "https://style-in-backend.onrender.com", // fallback safety
+  baseURL: process.env.REACT_APP_API_URL, // NO /api/v1 here
   withCredentials: true,
 });
 
