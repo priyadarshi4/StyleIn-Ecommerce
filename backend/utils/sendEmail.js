@@ -1,34 +1,21 @@
-const nodeMailer = require("nodemailer");
+const { Resend } = require("resend");
 
-// Options are passed as args from userController or other files
-const sendEmail = async (options) => {
-    const transporter = nodeMailer.createTransport({
-        // Simple Mail Transfer Protocol (SMTP)
-        host: process.env.SMTP_HOST, // e.g., "smtp.gmail.com"
-        port: process.env.SMTP_PORT, // e.g., 465
-        service: process.env.SMTP_SERVICE, // e.g., "gmail"
-        auth: {
-            // Your email and password for sending mail
-            user: process.env.SMTP_MAIL,
-            pass: process.env.SMTP_PASSWORD,
-        },
-        secure: true, // Added: Use SSL/TLS for secure connection (required for port 465)
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const sendEmail = async ({ email, subject, message }) => {
+  try {
+    await resend.emails.send({
+      from: process.env.EMAIL_FROM,
+      to: email,
+      subject,
+      html: `<p>${message}</p>`,
     });
 
-    const mailOptions = {
-        from: process.env.SMTP_MAIL, // Fixed typo: "SMPT_MAIL" → "SMTP_MAIL"
-        to: options.email,
-        subject: options.subject,
-        text: options.message,
-    };
-
-    try {
-        await transporter.sendMail(mailOptions);
-        console.log("Email sent successfully");
-    } catch (error) {
-        console.error("Error sending email:", error);
-        throw error; // Re-throw to let caller handle (e.g., userController)
-    }
+    console.log("✅ OTP email sent via Resend to:", email);
+  } catch (error) {
+    console.error("❌ Resend email error:", error);
+    throw new Error("Failed to send OTP");
+  }
 };
 
 module.exports = sendEmail;
