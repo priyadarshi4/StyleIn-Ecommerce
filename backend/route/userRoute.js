@@ -3,26 +3,71 @@ const rateLimit = require("express-rate-limit");
 
 const router = express.Router();
 
-const { registerUser, loginUser, logoutUser, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile, getAllUser, getSingleUser, deleteUser, updateUserRole, verifyOTP } = require("../controller/userConttroler"); // Fixed typo: "userConttroler" → "userController"; Added verifyOTP
+const {
+  registerUser,
+  loginUser,
+  logoutUser,
+  forgotPassword,
+  resetPassword,
+  getUserDetails,
+  updatePassword,
+  updateProfile,
+  getAllUser,
+  getSingleUser,
+  deleteUser,
+  updateUserRole,
+  verifyOTP,
+} = require("../controller/userConttroler");
+
 const { isAuthentictedUser, authorizeRoles } = require("../middleWare/auth");
 
-// Rate limiter for registration: 5 requests per hour per IP to prevent spam
+// ✅ PRODUCTION-SAFE RATE LIMITER (Render compatible)
 const registerLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5,
-  message: "Too many registration attempts, please try again later.",
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 requests per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: "Too many OTP requests. Please try again later.",
+  },
 });
 
-router.route("/register").post(registerLimiter, registerUser); // Added rate limiting
-router.route("/verify-otp").post(verifyOTP); // New route for OTP verification
-router.route("/login").post(loginUser);
-router.route("/logout").get(logoutUser);
-router.route("/password/reset/:token").put(resetPassword);
-router.route("/profile").get(isAuthentictedUser, getUserDetails);
-router.route("/password/forgot").post(forgotPassword);
-router.route("/password/update").put(isAuthentictedUser, updatePassword);
-router.route("/profile/update").put(isAuthentictedUser, updateProfile);
-router.route("/admin/users").get(isAuthentictedUser, authorizeRoles("admin"), getAllUser);
-router.route("/admin/user/:id").get(isAuthentictedUser, authorizeRoles("admin"), getSingleUser).put(isAuthentictedUser, authorizeRoles("admin"), updateUserRole).delete(isAuthentictedUser, authorizeRoles("admin"), deleteUser);
+// =================== AUTH ROUTES ===================
+
+// Send OTP + Register (POST ONLY)
+router.post("/register", registerLimiter, registerUser);
+
+// Verify OTP
+router.post("/verify-otp", verifyOTP);
+
+// Login / Logout
+router.post("/login", loginUser);
+router.get("/logout", logoutUser);
+
+// Password reset
+router.post("/password/forgot", forgotPassword);
+router.put("/password/reset/:token", resetPassword);
+
+// =================== USER ROUTES ===================
+
+router.get("/profile", isAuthentictedUser, getUserDetails);
+router.put("/password/update", isAuthentictedUser, updatePassword);
+router.put("/profile/update", isAuthentictedUser, updateProfile);
+
+// =================== ADMIN ROUTES ===================
+
+router.get(
+  "/admin/users",
+  isAuthentictedUser,
+  authorizeRoles("admin"),
+  getAllUser
+);
+
+router
+  .route("/admin/user/:id")
+  .get(isAuthentictedUser, authorizeRoles("admin"), getSingleUser)
+  .put(isAuthentictedUser, authorizeRoles("admin"), updateUserRole)
+  .delete(isAuthentictedUser, authorizeRoles("admin"), deleteUser);
 
 module.exports = router;

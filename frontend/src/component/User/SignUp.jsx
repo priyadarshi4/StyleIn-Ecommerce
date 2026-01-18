@@ -294,7 +294,7 @@ function Signup() {
                   <Grid item>
                     <FormControlLabel
                       control={<Checkbox />}
-                      label="I Accept The Cricket Weapon Terms & Conditions"
+                      label="I Accept The Style In Terms & Conditions"
                       className={classes.checkbox}
                       checked={areCheckboxesChecked.checkbox1}
                       onChange={handleCheckboxChange("checkbox1")}
@@ -303,7 +303,7 @@ function Signup() {
                   <Grid item>
                     <FormControlLabel
                       control={<Checkbox />}
-                      label="I Accept The Cricket Weapon Terms Of Use"
+                      label="I Accept The Style In Terms Of Use"
                       className={classes.checkbox}
                       checked={areCheckboxesChecked.checkbox2}
                       onChange={handleCheckboxChange("checkbox2")}
