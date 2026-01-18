@@ -39,7 +39,7 @@ exports.registerUser = asyncWrapper(async (req, res, next) => {
     await sendEmail({
       email,
       subject: `Style In-STORE Account Verification`,
-      message,
+      message:`Your OTP is ${otp}. It is valid for 5 minutes.`,
     });
 
     res.status(200).json({
