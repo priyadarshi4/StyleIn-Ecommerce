@@ -96,7 +96,7 @@ const promoProducts = shuffledProducts.slice(0, 4);
         <Loader />
       ) : (
         <>
-          <MataData title="Cricket Weapon - Premium Cricket Equipment" />
+          <MataData title="Style-In" />
 
           <div className="Home_Page">
             {/* HERO SECTION */}
