@@ -2,7 +2,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const asyncWrapper = require("../middleWare/asyncWrapper");
 const userModel = require("../model/userModel");
 const sendJWtToken = require("../utils/JwtToken");
-const sendEmail = require("../utils/sendEmail");
+const sendOTPEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 
@@ -36,21 +36,20 @@ exports.registerUser = asyncWrapper(async (req, res, next) => {
   // Send OTP email
   const message = `Your OTP for account registration is: ${otp}. It expires in 15 minutes.`;
   try {
-    await sendEmail({
-      email,
-      subject: `Style In-STORE Account Verification`,
-      message:`Your OTP is ${otp}. It is valid for 5 minutes.`,
-    });
+  await sendOTPEmail({
+    email,
+    otp,
+  });
 
-    res.status(200).json({
-      success: true,
-      message: `OTP sent to ${email} successfully`,
-    });
-  } catch (error) {
-    // Clean up OTP on failure
-    delete otpStore[email];
-    return next(new ErrorHandler("Failed to send OTP", 500));
-  }
+  res.status(200).json({
+    success: true,
+    message: `OTP sent to ${email} successfully`,
+  });
+} catch (error) {
+  delete otpStore[email];
+  return next(new ErrorHandler("Failed to send OTP", 500));
+}
+
 });
 
 // New: Verify OTP and Create Account >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
