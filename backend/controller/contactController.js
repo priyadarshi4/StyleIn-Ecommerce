@@ -1,102 +1,81 @@
-const nodemailer = require("nodemailer");
+const sendEmail = require("../utils/sendEmail");
 
 exports.sendContactMail = async (req, res) => {
   try {
     const { issue, detail, language, email, message } = req.body;
 
     if (!email || !message) {
-      return res.status(400).json({ success: false });
+      return res.status(400).json({
+        success: false,
+        message: "Email and message are required",
+      });
     }
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      secure: true, // 465
-      service: process.env.SMTP_SERVICE,
-      auth: {
-        user: process.env.SMTP_MAIL,
-        pass: process.env.SMTP_PASSWORD,
-      },
-    });
-
     /* ================= ADMIN MAIL ================= */
-    await transporter.sendMail({
-      from: `"StyleIn Support" <${process.env.SMTP_MAIL}>`,
-      to: process.env.SMTP_MAIL,
-      subject: `📩 New Support Request | ${issue}`,
-      html: `
-        <h3>New Support Request</h3>
-        <p><b>Issue:</b> ${issue}</p>
-        <p><b>Detail:</b> ${detail}</p>
-        <p><b>Language:</b> ${language}</p>
-        <p><b>User Email:</b> ${email}</p>
-        <p><b>Message:</b></p>
-        <p>${message}</p>
+    await sendEmail({
+      email: process.env.ADMIN_EMAIL || "priyadarshiprince5@gmail.com",
+      subject: `📩 New Support Request | ${issue || "General"}`,
+      message: `
+New Support Request
+
+Issue: ${issue}
+Detail: ${detail}
+Language: ${language}
+User Email: ${email}
+
+Message:
+${message}
       `,
     });
 
     /* ================= USER AUTO-REPLY ================= */
-    await transporter.sendMail({
-      from: `"StyleIn Support" <${process.env.SMTP_MAIL}>`,
-      to: email,
+    await sendEmail({
+      email,
       subject: "✅ We received your request | StyleIn",
-      html: `
-        <h2>Hi 👋</h2>
-        <p>Thanks for reaching out to <b>StyleIn</b>!</p>
+      message: `
+Hi 👋
 
-        <p>We’ve received your request regarding <b>${issue}</b>.
-        Our support team will get back to you shortly.</p>
+Thanks for contacting StyleIn!
 
-        <hr/>
+We’ve received your request regarding "${issue}".
+Our support team will get back to you shortly.
 
-        <p><b>Your message:</b></p>
-        <p>${message}</p>
+Your message:
+${message}
 
-        <br/>
-        <p>💬 Need urgent help? Reply to this email.</p>
-
-        <p>— Team StyleIn</p>
+— Team StyleIn
       `,
     });
 
-    /* ================= OFFER / NOTIFICATION MAIL ================= */
-    await transporter.sendMail({
-      from: `"StyleIn Offers" <${process.env.SMTP_MAIL}>`,
-      to: email,
+    /* ================= OFFER MAIL ================= */
+    await sendEmail({
+      email,
       subject: "🎁 A little gift from StyleIn!",
-      html: `
-        <h2>🎉 Special Offer Just for You</h2>
+      message: `
+🎉 Special Offer Just for You!
 
-        <p>As a thank you for contacting us, here’s a small gift:</p>
+Use coupon code: STYLEIN10
+Get 10% OFF on your next purchase.
 
-        <h3 style="color:#ff6600;">STYLEIN10</h3>
-        <p>Get <b>10% OFF</b> on your next purchase.</p>
+⏰ Valid for 48 hours only.
 
-        <p>⏰ Valid for 48 hours only.</p>
+Visit:
+${process.env.FRONTEND_URL}
 
-        <a
-          href="${process.env.FRONTEND_URL}"
-          style="
-            display:inline-block;
-            padding:12px 20px;
-            background:#ff6600;
-            color:white;
-            text-decoration:none;
-            border-radius:6px;
-            font-weight:bold;
-          "
-        >
-          Shop Now
-        </a>
-
-        <p><br/>Happy shopping 🛍️</p>
-        <p>— Team StyleIn</p>
+— Team StyleIn
       `,
     });
 
-    res.status(200).json({ success: true });
+    res.status(200).json({
+      success: true,
+      message: "Support request sent successfully",
+    });
   } catch (error) {
-    console.error("Mail Error:", error);
-    res.status(500).json({ success: false });
+    console.error("Contact Mail Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to send support email",
+    });
   }
 };
