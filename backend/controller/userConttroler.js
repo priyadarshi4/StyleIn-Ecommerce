@@ -30,54 +30,89 @@ exports.registerUser = asyncWrapper(async (req, res, next) => {
   }
 
   // Generate OTP and store temporarily
-  // Generate OTP
-// Generate OTP
+ // ============================
+// Generate & Store OTP
+// ============================
 const otp = generateOTP();
 
-// Store OTP
 otpStore[email] = {
-  otp,
-  expires: Date.now() + 5 * 60 * 1000,
-  userData: { name, password, avatar: req.body.avatar },
+  otp: String(otp), // 🔐 always store as string
+  expires: Date.now() + 5 * 60 * 1000, // 5 minutes
+  userData: {
+    name,
+    password,
+    avatar: req.body.avatar || "",
+  },
 };
 
+// ============================
+// Send OTP Email
+// ============================
 try {
   await sendEmail({
     email,
     subject: "StyleIn Account Verification",
     html: `
-      <div style="font-family: Arial, sans-serif; padding:20px;">
-        <h2>Verify your email</h2>
+      <div style="
+        font-family: Arial, sans-serif;
+        background:#f9f9f9;
+        padding:30px;
+        border-radius:10px;
+        max-width:480px;
+        margin:auto;
+      ">
+        <h2 style="color:#111;">Verify your email</h2>
+
         <p>Hello <b>${name}</b>,</p>
 
         <p>Your One-Time Password (OTP) is:</p>
 
         <div style="
-          font-size: 28px;
-          font-weight: bold;
-          letter-spacing: 6px;
-          margin: 20px 0;
+          font-size:32px;
+          font-weight:bold;
+          letter-spacing:6px;
+          background:#fff;
+          padding:15px 20px;
+          text-align:center;
+          border-radius:8px;
+          margin:20px 0;
+          color:#111;
         ">
           ${otp}
         </div>
 
         <p>This OTP is valid for <b>5 minutes</b>.</p>
-        <p>If you didn’t request this, ignore this email.</p>
 
-        <br/>
-        <p>— Team <b>StyleIn</b></p>
+        <p style="color:#666;">
+          If you did not request this, please ignore this email.
+        </p>
+
+        <hr style="margin:25px 0;" />
+
+        <p style="font-size:13px;color:#888;">
+          — Team <b>StyleIn</b>
+        </p>
       </div>
     `,
   });
 
+  console.log("✅ OTP email queued for:", email);
+
   res.status(200).json({
     success: true,
-    message: `OTP sent to ${email} successfully`,
+    message: `OTP sent to ${email}`,
   });
+
 } catch (error) {
+  console.error("❌ OTP EMAIL FAILED:", error.message);
+
   delete otpStore[email];
-  return next(new ErrorHandler("Failed to send OTP", 500));
+
+  return next(
+    new ErrorHandler("Failed to send OTP. Please try again.", 500)
+  );
 }
+
 
 });
 
