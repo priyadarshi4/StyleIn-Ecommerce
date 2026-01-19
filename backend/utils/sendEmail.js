@@ -9,7 +9,7 @@ const sendEmail = async ({ email, subject, html }) => {
 
   try {
     const response = await resend.emails.send({
-      from: "StyleIn <onboarding@resend.dev>",
+      from: "StyleIn <onboarding@resend.dev>", // change later after domain verify
       to: email,
       subject,
       html,
