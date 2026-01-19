@@ -123,8 +123,9 @@ export const getAdminProducts = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/admin/products`);
-
+    const { data } = await axios.get(
+  "https://style-in-backend.onrender.com/api/v1/admin/products"
+);
     dispatch({
       type: ADMIN_PRODUCT_SUCCESS,
       payload: data.products,
@@ -150,7 +151,7 @@ export const createProduct = (productData) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `/api/v1/admin/product/new`,
+      "https://style-in-backend.onrender.com/api/v1/admin/product/new",
       productData,
       config
     );
@@ -176,9 +177,8 @@ export const deleteProduct = (id) => async (dispatch) => {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
 
     const { data } = await axios.delete(
-      `/api/v1/admin/product/${id}`
-    );
-
+  `https://style-in-backend.onrender.com/api/v1/admin/product/${id}`
+);
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
       payload: data.success,
@@ -204,11 +204,10 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `/api/v1/admin/product/${id}`,
-      productData,
-      config
-    );
-
+  `https://style-in-backend.onrender.com/api/v1/admin/product/${id}`,
+  productData,
+  config
+);
     dispatch({
       type: UPDATE_PRODUCT_SUCCESS,
       payload: data.success,
@@ -230,8 +229,9 @@ export const getAllreviews = (productId) => async (dispatch) => {
     dispatch({ type: ALL_REVIEW_REQUEST });
 
     const { data } = await axios.get(
-      `/api/v1/reviews?id=${productId}`
-    );
+  `https://style-in-backend.onrender.com/api/v1/reviews?id=${productId}`
+);
+
 
     dispatch({
       type: ALL_REVIEW_SUCCESS,
@@ -255,8 +255,8 @@ export const deleteProductReview =
       dispatch({ type: DELETE_REVIEW_REQUEST });
 
       const { data } = await axios.delete(
-        `/api/v1/product/reviews/delete?id=${reviewId}&productId=${productId}`
-      );
+  `https://style-in-backend.onrender.com/api/v1/product/reviews/delete?id=${reviewId}&productId=${productId}`
+);
 
       dispatch({
         type: DELETE_REVIEW_SUCCESS,
