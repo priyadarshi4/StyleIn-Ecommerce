@@ -30,15 +30,45 @@ exports.registerUser = asyncWrapper(async (req, res, next) => {
   }
 
   // Generate OTP and store temporarily
-  const otp = generateOTP();
-  otpStore[email] = { otp, expires: Date.now() + 15 * 60 * 1000, userData: { name, password, avatar: req.body.avatar } }; // Store user data for later creation
+  // Generate OTP
+const otp = generateOTP();
 
-  // Send OTP email
-  const message = `Your OTP for account registration is: ${otp}. It expires in 15 minutes.`;
-  try {
-  await sendOTPEmail({
+// Store OTP temporarily
+otpStore[email] = {
+  otp,
+  expires: Date.now() + 5 * 60 * 1000, // 5 minutes
+  userData: { name, password, avatar: req.body.avatar },
+};
+
+try {
+  await sendEmail({
     email,
-    otp,
+    subject: "StyleIn Account Verification",
+    html: `
+      <div style="font-family: Arial, sans-serif; padding:20px;">
+        <h2>Verify your email</h2>
+
+        <p>Hello <b>${name}</b>,</p>
+
+        <p>Your One-Time Password (OTP) for creating your StyleIn account is:</p>
+
+        <div style="
+          font-size: 28px;
+          font-weight: bold;
+          letter-spacing: 6px;
+          margin: 20px 0;
+        ">
+          ${otp}
+        </div>
+
+        <p>This OTP is valid for <b>5 minutes</b>.</p>
+
+        <p>If you did not request this, please ignore this email.</p>
+
+        <br/>
+        <p>— Team <b>StyleIn</b></p>
+      </div>
+    `,
   });
 
   res.status(200).json({
@@ -49,6 +79,7 @@ exports.registerUser = asyncWrapper(async (req, res, next) => {
   delete otpStore[email];
   return next(new ErrorHandler("Failed to send OTP", 500));
 }
+
 
 });
 
