@@ -179,12 +179,13 @@ exports.forgotPassword = asyncWrapper(async (req, res, next) => {
   const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it.`;
 
   try {
-    await sendEmail({
-      // sendEmail is method writen by us in utils folder.
-      email: user.email,
-      subject: `Ecommerce Password Recovery`,
-      message,
-    });
+    // AFTER (correct)
+await sendEmail({
+  email: user.email,
+  subject: "Ecommerce Password Recovery",
+  html: `<p>${message.replace(/\n/g, "<br/>")}</p>`,
+});
+
 
     res.status(200).json({
       success: true,
