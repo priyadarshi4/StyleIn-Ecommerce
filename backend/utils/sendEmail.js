@@ -9,7 +9,7 @@ const sendEmail = async ({ email, subject, html }) => {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: "StyleIn <onboarding@resend.dev>", // for testing only
+      from: "StyleIn <onboarding@resend.dkim>", // for testing only
       to: email,
       subject,
       html,
@@ -29,3 +29,6 @@ const sendEmail = async ({ email, subject, html }) => {
 };
 
 module.exports = sendEmail;
+
+
+
