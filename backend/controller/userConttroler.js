@@ -39,10 +39,11 @@ const otp = generateOTP();
 otpStore[email] = {
   otp,
   expires: Date.now() + 5 * 60 * 1000,
-  userData: { name, password, avatar: req.body.avatar },
+  userData: { name, password },
 };
 
 try {
+  
   await sendEmail({
   email,
   subject: "StyleIn Account Verification",
@@ -78,21 +79,14 @@ exports.verifyOTP = asyncWrapper(async (req, res, next) => {
   }
 
   // OTP valid: Proceed to create account
-  const { name, password, avatar } = stored.userData;
+  const { name, password } = stored.userData;
 
   // Upload avatar to Cloudinary
-  let avatarData = {};
-  if (avatar) {
-    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-      folder: "Avatar",
-      width: 150,
-      crop: "scale",
-    });
-    avatarData = {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
-    };
-  }
+  let avatarData = {
+  public_id: "default_avatar",
+  url: "https://res.cloudinary.com/demo/image/upload/v1690000000/default-avatar.png",
+};
+
 
   // Create user
   const user = await userModel.create({
