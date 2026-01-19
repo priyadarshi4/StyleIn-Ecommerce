@@ -1,5 +1,4 @@
 const { Resend } = require("resend");
-
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async ({ email, subject, html }) => {
@@ -8,19 +7,22 @@ const sendEmail = async ({ email, subject, html }) => {
   }
 
   try {
-    const response = await resend.emails.send({
-      from: "StyleIn <onboarding@resend.dev>", // change later after domain verify
+    const { data, error } = await resend.emails.send({
+      from: "StyleIn <onboarding@resend.dev>",
       to: email,
       subject,
       html,
     });
 
-    console.log("✅ Email sent:", response.id);
-    return response;
+    if (error) {
+      console.error("❌ Resend email error:", error);
+      throw error;
+    }
+
+    console.log("✅ Email sent:", data?.id); // <-- correct
+    return data;
   } catch (error) {
     console.error("❌ Resend email error:", error);
     throw error;
   }
 };
-
-module.exports = sendEmail;
