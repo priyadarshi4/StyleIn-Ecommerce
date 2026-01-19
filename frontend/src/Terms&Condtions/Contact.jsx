@@ -13,6 +13,8 @@ import { useAlert } from "react-alert";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import MetaData from "../component/layouts/MataData/MataData";
+import api from "../utils/axios";
+
 const useStyles = makeStyles((theme) => ({
   root_contactus: {
     padding: "8rem 0",
@@ -241,27 +243,45 @@ menu_contact: {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  try {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+  if (!formData.email || !formData.message) {
+    alert.error("Email and message are required");
+    return;
+  }
 
-    const data = await res.json();
+  try {
+    const { data } = await api.post(
+      "/api/v1/contact",
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (data.success) {
       alert.success("Support request sent successfully!");
+
+      // ✅ RESET FORM
+      setFormData({
+        issue: "e-commerce",
+        detail: "others",
+        language: "english",
+        email: "",
+        message: "",
+      });
+
       history.push("/");
     } else {
-      alert.error("Failed to send message");
+      alert.error(data.message || "Failed to send message");
     }
   } catch (error) {
-    alert.error("Server error. Please try again later.");
+    alert.error(
+      error.response?.data?.message ||
+      "Server error. Please try again later."
+    );
   }
-}
+};
 
   
   return (
