@@ -49,7 +49,9 @@ export const getProduct = (
       link += `&category=${category}`;
     }
 
-    const { data } = await axios.get(link);
+    const { data } = await axios.get(
+      `https://style-in-backend.onrender.com${link}`
+    );
 
     dispatch({
       type: ALL_PRODUCT_SUCCESS,
@@ -58,11 +60,11 @@ export const getProduct = (
   } catch (error) {
     dispatch({
       type: ALL_PRODUCT_FAIL,
-      payload:
-        error.response?.data?.message || error.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
+
 
 /* =========================================================
    GET PRODUCT DETAILS (🔥 FIXED)
