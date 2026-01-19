@@ -66,10 +66,19 @@ const ProfilePage = () => {
           </h4>
           <div className="profileSection">
             <Avatar
-              alt={user.name}
-              src={user.avatar.url}
-              className="profileAvatar"
-            />
+                    alt={user?.name}
+                    src={user?.avatar?.url}
+                    className="profileAvatar"
+                    imgProps={{
+                      onError: (e) => {
+                        e.target.onerror = null;
+                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          user?.name || "User"
+                        )}&background=111827&color=fff&size=256`;
+                      },
+                    }}
+                  />
+
               <Typography className="profileTextt">
                 <h5 className="profileSubHeading">Name :</h5>
                 {user.name}
