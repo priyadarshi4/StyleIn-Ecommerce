@@ -1,5 +1,8 @@
 const sendEmail = require("../utils/sendEmail");
 
+// helper: delay
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 exports.sendContactMail = async (req, res) => {
   try {
     const { issue, detail, language, email, message } = req.body;
@@ -26,6 +29,8 @@ exports.sendContactMail = async (req, res) => {
       `,
     });
 
+    await sleep(600); // ⏱️ IMPORTANT (rate limit safe)
+
     /* ================= USER AUTO-REPLY ================= */
     await sendEmail({
       email,
@@ -42,6 +47,8 @@ exports.sendContactMail = async (req, res) => {
         <p>— Team <b>StyleIn</b></p>
       `,
     });
+
+    await sleep(600); // ⏱️ IMPORTANT
 
     /* ================= OFFER MAIL ================= */
     await sendEmail({
