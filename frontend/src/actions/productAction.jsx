@@ -97,16 +97,14 @@ export const newReview = (reviewData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_REVIEW_REQUEST });
 
-    const config = {
-      headers: { "Content-Type": "application/json" },
-    };
-
     const { data } = await axios.put(
-  `https://style-in-backend.onrender.com/api/v1/review/new`,
-  reviewData,
-  config
-);
-
+      `https://style-in-backend.onrender.com/api/v1/review/new`,
+      reviewData,
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true, // 🔥 REQUIRED
+      }
+    );
 
     dispatch({
       type: NEW_REVIEW_SUCCESS,
@@ -115,8 +113,7 @@ export const newReview = (reviewData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_REVIEW_FAIL,
-      payload:
-        error.response?.data?.message || error.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

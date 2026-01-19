@@ -45,8 +45,8 @@ export const useStyles = makeStyles((theme) => ({
     background: "rgb(37, 37, 37)",
     color: "rgb(255, 255, 255)",
     "&:hover": {
-      backgroundColor: "rgba(222, 9, 9, 0.744)",
-      borderColor: "rgba(222, 9, 9, 0.744)",
+      backgroundColor: "rgba(224, 90, 18, 0.74)",
+      borderColor: "rgba(233, 83, 14, 0.74)",
       transform: "scale(1.05)",
     },
   },
@@ -115,10 +115,10 @@ sortBy: {
     backgroundColor: "black",
     color: "white",
     "&:hover": {
-      backgroundColor: "rgba(222, 9, 9, 0.744)",
+      backgroundColor: "rgba(235, 97, 32, 0.74)",
     },
     "&.Mui-selected": {
-      backgroundColor: "rgba(222, 9, 9, 0.744)",
+      backgroundColor: "rgba(235, 104, 28, 0.74)",
       color: "white",
     },
   },

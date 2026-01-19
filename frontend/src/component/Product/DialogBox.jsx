@@ -54,40 +54,40 @@ const DialogBox = ({ open, handleClose, id }) => {
     setComment(event.target.value);
   };
 
-  const handleRatingChange = (event) => {
-    setRatings(event.target.value);
-  };
+  const handleRatingChange = (event, newValue) => {
+  setRatings(newValue);
+};
 
   const handleRecommendChange = (event) => {
-    setRecommend(event.target.value);
-  };
+  setRecommend(event.target.value === "yes");
+};
 
-  const handleSubmit = () => {
-    const myForm = new FormData();
-    myForm.set("title", title);
-    myForm.set("comment", comment);
-    myForm.set("ratings", ratings);
-    myForm.set("recommend", recommend);
-    if(id){
-          myForm.set("productId", id);
-    }else{
-          myForm.set("productId", productId);
-    }
-    dispatch(newReview(myForm));
-      alert.success("Review posted successfully");
-    handleClose();
-  };
+
+ const handleSubmit = () => {
+  const myForm = new FormData();
+  myForm.set("title", title);
+  myForm.set("comment", comment);
+  myForm.set("ratings", ratings);
+  myForm.set("recommend", recommend);
+  myForm.set("productId", id || productId);
+
+  dispatch(newReview(myForm));
+};
+
 
   useEffect(() => {
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
-    if (success) {
-      alert.success("Review posted successfully");
-      dispatch({ type: NEW_REVIEW_RESET });
-    }
-  }, [dispatch, alert, error, success]);
+  if (error) {
+    alert.error(error);
+    dispatch(clearErrors());
+  }
+
+  if (success) {
+    alert.success("Review posted successfully");
+    dispatch({ type: NEW_REVIEW_RESET });
+    handleClose(); // ✅ close only after success
+  }
+}, [dispatch, alert, error, success, handleClose]);
+
 
   return (
     <Dialog
