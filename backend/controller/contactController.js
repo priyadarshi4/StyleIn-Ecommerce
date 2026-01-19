@@ -15,16 +15,14 @@ exports.sendContactMail = async (req, res) => {
     await sendEmail({
       email: process.env.ADMIN_EMAIL || "priyadarshiprince5@gmail.com",
       subject: `📩 New Support Request | ${issue || "General"}`,
-      message: `
-New Support Request
-
-Issue: ${issue}
-Detail: ${detail}
-Language: ${language}
-User Email: ${email}
-
-Message:
-${message}
+      html: `
+        <h2>New Support Request</h2>
+        <p><b>Issue:</b> ${issue}</p>
+        <p><b>Detail:</b> ${detail}</p>
+        <p><b>Language:</b> ${language}</p>
+        <p><b>User Email:</b> ${email}</p>
+        <p><b>Message:</b></p>
+        <blockquote>${message}</blockquote>
       `,
     });
 
@@ -32,18 +30,16 @@ ${message}
     await sendEmail({
       email,
       subject: "✅ We received your request | StyleIn",
-      message: `
-Hi 👋
+      html: `
+        <h2>Hi 👋</h2>
+        <p>Thanks for contacting <b>StyleIn</b>!</p>
+        <p>We’ve received your request regarding <b>${issue}</b>.</p>
 
-Thanks for contacting StyleIn!
+        <p><b>Your message:</b></p>
+        <blockquote>${message}</blockquote>
 
-We’ve received your request regarding "${issue}".
-Our support team will get back to you shortly.
-
-Your message:
-${message}
-
-— Team StyleIn
+        <br/>
+        <p>— Team <b>StyleIn</b></p>
       `,
     });
 
@@ -51,18 +47,29 @@ ${message}
     await sendEmail({
       email,
       subject: "🎁 A little gift from StyleIn!",
-      message: `
-🎉 Special Offer Just for You!
+      html: `
+        <h2>🎉 Special Offer Just for You!</h2>
 
-Use coupon code: STYLEIN10
-Get 10% OFF on your next purchase.
+        <p>Use coupon code:</p>
+        <h1 style="color:#e65100;">STYLEIN10</h1>
 
-⏰ Valid for 48 hours only.
+        <p>Get <b>10% OFF</b> on your next purchase.</p>
+        <p>⏰ Valid for <b>48 hours</b> only.</p>
 
-Visit:
-${process.env.FRONTEND_URL}
+        <a href="${process.env.FRONTEND_URL}"
+           style="
+             display:inline-block;
+             padding:12px 20px;
+             background:#000;
+             color:#fff;
+             text-decoration:none;
+             border-radius:6px;
+           ">
+          Shop Now
+        </a>
 
-— Team StyleIn
+        <br/><br/>
+        <p>— Team <b>StyleIn</b></p>
       `,
     });
 
@@ -70,6 +77,7 @@ ${process.env.FRONTEND_URL}
       success: true,
       message: "Support request sent successfully",
     });
+
   } catch (error) {
     console.error("Contact Mail Error:", error);
 
