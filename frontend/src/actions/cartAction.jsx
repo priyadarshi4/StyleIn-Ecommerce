@@ -15,9 +15,10 @@ export const addItemToCart =
   (id, quantity, size) =>
   async (dispatch, getState) => {
     try {
-      const response = await axios.get(`/api/v1/product/${id}`);
+      const response = await axios.get(
+        `https://style-in-backend.onrender.com/api/v1/product/${id}`
+      );
 
-      // 🔥 SAFE extraction (handles all backend styles)
       const product =
         response.data?.product ||
         response.data?.Product ||
@@ -28,7 +29,6 @@ export const addItemToCart =
         return;
       }
 
-      // 🔥 SAFE stock handling
       let stock = 0;
 
       if (typeof product.Stock === "number") {
@@ -37,7 +37,6 @@ export const addItemToCart =
         stock = product.stock;
       }
 
-      // 🔥 Size-wise stock
       if (size && Array.isArray(product.sizes)) {
         const sizeObj = product.sizes.find((s) => s.size === size);
         stock = sizeObj ? Number(sizeObj.stock) : 0;
@@ -52,7 +51,7 @@ export const addItemToCart =
           image: product.images?.[0]?.url || "",
           stock,
           quantity,
-          size, // 🔥 VERY IMPORTANT
+          size,
         },
       });
 
@@ -64,6 +63,7 @@ export const addItemToCart =
       console.error("❌ Add to cart failed:", error);
     }
   };
+
 
 /*
 ====================================================
