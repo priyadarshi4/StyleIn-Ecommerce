@@ -273,13 +273,17 @@ function Dashboard() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
-  const { products, loading, error } = useSelector((state) => state.products);
-  const { orders, error: ordersError } = useSelector(
-    (state) => state.allOrders
-  );
-  const { users, error: usersError } = useSelector((state) => state.allUsers);
+  const { products = [], loading, error } = useSelector(
+  (state) => state.products
+);
+  const { orders = [], error: ordersError } = useSelector(
+  (state) => state.allOrders
+);
+const { users = [], error: usersError } = useSelector(
+  (state) => state.allUsers
+);
 
-  const alert = useAlert();
+   const alert = useAlert();
 
   let OutOfStock = 0;
   products &&
@@ -295,15 +299,18 @@ function Dashboard() {
   useEffect(() => {
     if (error) {
       alert.error(error);
-      dispatch(clearErrors);
+      dispatch(clearErrors());
+;
     }
     if (usersError) {
       alert.error(usersError);
-      dispatch(clearErrors);
+      dispatch(clearErrors());
+;
     }
     if (ordersError) {
       alert.error(ordersError);
-      dispatch(clearErrors);
+      dispatch(clearErrors());
+;
     }
     
     dispatch(getAllOrders());
@@ -417,8 +424,7 @@ function Dashboard() {
         type: "pie",
         name: "Share",
         data: [
-          ["Out of Stock", products.length - OutOfStock],
-
+          ["In Stock", products.length - OutOfStock],
           {
             name: "Out of Stock",
             y: OutOfStock,
