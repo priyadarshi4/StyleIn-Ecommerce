@@ -31,12 +31,13 @@ exports.registerUser = asyncWrapper(async (req, res, next) => {
 
   // Generate OTP and store temporarily
   // Generate OTP
+// Generate OTP
 const otp = generateOTP();
 
-// Store OTP temporarily
+// Store OTP
 otpStore[email] = {
   otp,
-  expires: Date.now() + 5 * 60 * 1000, // 5 minutes
+  expires: Date.now() + 5 * 60 * 1000,
   userData: { name, password, avatar: req.body.avatar },
 };
 
@@ -47,10 +48,9 @@ try {
     html: `
       <div style="font-family: Arial, sans-serif; padding:20px;">
         <h2>Verify your email</h2>
-
         <p>Hello <b>${name}</b>,</p>
 
-        <p>Your One-Time Password (OTP) for creating your StyleIn account is:</p>
+        <p>Your One-Time Password (OTP) is:</p>
 
         <div style="
           font-size: 28px;
@@ -62,8 +62,7 @@ try {
         </div>
 
         <p>This OTP is valid for <b>5 minutes</b>.</p>
-
-        <p>If you did not request this, please ignore this email.</p>
+        <p>If you didn’t request this, ignore this email.</p>
 
         <br/>
         <p>— Team <b>StyleIn</b></p>
@@ -79,7 +78,6 @@ try {
   delete otpStore[email];
   return next(new ErrorHandler("Failed to send OTP", 500));
 }
-
 
 });
 
