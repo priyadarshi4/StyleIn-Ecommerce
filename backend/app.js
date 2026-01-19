@@ -67,7 +67,7 @@ app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
 app.use("/api/v1", health);
-app.use("/api", contactRoute);
+app.use("/api/v1", contactRoute);
 
 // ================== ERROR HANDLER ==================
 app.use(errorMiddleware);
