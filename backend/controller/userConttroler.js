@@ -49,18 +49,42 @@ otpStore[email] = {
 // Send OTP Email
 // ============================
 try {
+  // Generate OTP
+const otp = generateOTP();
+
+// Store OTP
+otpStore[email] = {
+  otp,
+  expires: Date.now() + 5 * 60 * 1000,
+  userData: { name, password, avatar: req.body.avatar },
+};
+
+try {
   await sendEmail({
-  email,
-  subject: "StyleIn Account Verification",
-  html: `
-    <div style="font-family: Arial; padding:20px">
-      <h2>Verify your email</h2>
-      <p>Your OTP is:</p>
-      <h1>${otp}</h1>
-      <p>Valid for 5 minutes.</p>
-    </div>
-  `,
-});
+    email,
+    subject: "StyleIn Account Verification",
+    html: `
+      <div style="font-family: Arial; padding:20px">
+        <h2>Verify your email</h2>
+        <p>Hello <b>${name}</b>,</p>
+        <p>Your OTP is:</p>
+        <h1 style="letter-spacing:6px">${otp}</h1>
+        <p>Valid for 5 minutes.</p>
+        <p>If you didn’t request this, ignore this email.</p>
+        <br/>
+        <b>— Team StyleIn</b>
+      </div>
+    `,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: `OTP sent to ${email}`,
+  });
+} catch (error) {
+  delete otpStore[email];
+  return next(new ErrorHandler("Failed to send OTP", 500));
+}
 
 
 
