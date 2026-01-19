@@ -44,10 +44,11 @@ otpStore[email] = {
 
 try {
   await sendEmail({
-    email,
-    subject: "StyleIn Account Verification",
-    html: otpEmailTemplate(name, otp),
-  });
+  email,
+  subject: "StyleIn Account Verification",
+  html: otpEmailTemplate(name, otp),
+});
+
 
   res.status(200).json({
     success: true,
