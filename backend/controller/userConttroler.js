@@ -82,9 +82,9 @@ exports.verifyOTP = asyncWrapper(async (req, res, next) => {
   const { name, password } = stored.userData;
 
   // Upload avatar to Cloudinary
-  let avatarData = {
+ let avatarData = {
   public_id: "default_avatar",
-  url: "https://res.cloudinary.com/demo/image/upload/v1690000000/default-avatar.png",
+  url: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=111827&color=ffffff&size=256`,
 };
 
 
