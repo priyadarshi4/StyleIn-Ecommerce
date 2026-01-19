@@ -50,51 +50,15 @@ otpStore[email] = {
 // ============================
 try {
   await sendEmail({
-    email,
-    subject: "StyleIn Account Verification",
-    html: `
-      <div style="
-        font-family: Arial, sans-serif;
-        background:#f9f9f9;
-        padding:30px;
-        border-radius:10px;
-        max-width:480px;
-        margin:auto;
-      ">
-        <h2 style="color:#111;">Verify your email</h2>
+  email,
+  subject: "StyleIn Account Verification",
+  html: `
+    <h2>Your OTP</h2>
+    <p><b>${otp}</b></p>
+    <p>Valid for 5 minutes</p>
+  `,
+});
 
-        <p>Hello <b>${name}</b>,</p>
-
-        <p>Your One-Time Password (OTP) is:</p>
-
-        <div style="
-          font-size:32px;
-          font-weight:bold;
-          letter-spacing:6px;
-          background:#fff;
-          padding:15px 20px;
-          text-align:center;
-          border-radius:8px;
-          margin:20px 0;
-          color:#111;
-        ">
-          ${otp}
-        </div>
-
-        <p>This OTP is valid for <b>5 minutes</b>.</p>
-
-        <p style="color:#666;">
-          If you did not request this, please ignore this email.
-        </p>
-
-        <hr style="margin:25px 0;" />
-
-        <p style="font-size:13px;color:#888;">
-          — Team <b>StyleIn</b>
-        </p>
-      </div>
-    `,
-  });
 
   console.log("✅ OTP email queued for:", email);
 
