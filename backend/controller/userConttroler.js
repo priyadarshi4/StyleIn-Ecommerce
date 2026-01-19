@@ -53,11 +53,15 @@ try {
   email,
   subject: "StyleIn Account Verification",
   html: `
-    <h2>Your OTP</h2>
-    <p><b>${otp}</b></p>
-    <p>Valid for 5 minutes</p>
+    <div style="font-family: Arial; padding:20px">
+      <h2>Verify your email</h2>
+      <p>Your OTP is:</p>
+      <h1>${otp}</h1>
+      <p>Valid for 5 minutes.</p>
+    </div>
   `,
 });
+
 
 
   console.log("✅ OTP email queued for:", email);
