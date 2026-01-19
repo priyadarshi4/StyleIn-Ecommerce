@@ -6,6 +6,7 @@ const sendOTPEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 const otpEmailTemplate = require("../utils/otpEmailTemplate");
+const sendEmail = require("../utils/sendEmail");
 
 // In-memory OTP store (use Redis in production for scalability)
 const otpStore = {};
@@ -31,11 +32,10 @@ exports.registerUser = asyncWrapper(async (req, res, next) => {
   }
 
   // Generate OTP and store temporarily
- // ============================
-// Generate & Store OTP
-// ============================
+// Generate OTP
 const otp = generateOTP();
 
+// Store OTP
 otpStore[email] = {
   otp,
   expires: Date.now() + 5 * 60 * 1000,
@@ -44,12 +44,10 @@ otpStore[email] = {
 
 try {
   await sendEmail({
-    to: email,
+    email,
     subject: "StyleIn Account Verification",
     html: otpEmailTemplate(name, otp),
   });
-
-  console.log(`✅ OTP sent to ${email}`);
 
   res.status(200).json({
     success: true,
