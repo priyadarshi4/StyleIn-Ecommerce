@@ -42,6 +42,8 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://style-in-ecommerce.vercel.app",
+      "https://style-in.shop",
+      "https://www.style-in.shop",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
