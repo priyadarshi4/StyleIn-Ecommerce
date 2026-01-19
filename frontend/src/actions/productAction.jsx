@@ -124,8 +124,10 @@ export const getAdminProducts = () => async (dispatch) => {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
 
     const { data } = await axios.get(
-  "https://style-in-backend.onrender.com/api/v1/admin/products"
-);
+      "https://style-in-backend.onrender.com/api/v1/admin/products",
+      { withCredentials: true }
+    );
+
     dispatch({
       type: ADMIN_PRODUCT_SUCCESS,
       payload: data.products,
@@ -133,8 +135,7 @@ export const getAdminProducts = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ADMIN_PRODUCT_FAIL,
-      payload:
-        error.response?.data?.message || error.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -153,7 +154,10 @@ export const createProduct = (productData) => async (dispatch) => {
     const { data } = await axios.post(
       "https://style-in-backend.onrender.com/api/v1/admin/product/new",
       productData,
-      config
+      {
+    headers: { "Content-Type": "multipart/form-data" },
+    withCredentials: true,
+  }
     );
 
     dispatch({
@@ -177,7 +181,8 @@ export const deleteProduct = (id) => async (dispatch) => {
     dispatch({ type: DELETE_PRODUCT_REQUEST });
 
     const { data } = await axios.delete(
-  `https://style-in-backend.onrender.com/api/v1/admin/product/${id}`
+  `https://style-in-backend.onrender.com/api/v1/admin/product/${id}`,
+  { withCredentials: true }
 );
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
@@ -206,7 +211,10 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     const { data } = await axios.put(
   `https://style-in-backend.onrender.com/api/v1/admin/product/${id}`,
   productData,
-  config
+  {
+    headers: { "Content-Type": "multipart/form-data" },
+    withCredentials: true,
+  }
 );
     dispatch({
       type: UPDATE_PRODUCT_SUCCESS,
@@ -229,7 +237,8 @@ export const getAllreviews = (productId) => async (dispatch) => {
     dispatch({ type: ALL_REVIEW_REQUEST });
 
     const { data } = await axios.get(
-  `https://style-in-backend.onrender.com/api/v1/reviews?id=${productId}`
+  `https://style-in-backend.onrender.com/api/v1/reviews?id=${productId}`,
+  { withCredentials: true }
 );
 
 
@@ -255,7 +264,8 @@ export const deleteProductReview =
       dispatch({ type: DELETE_REVIEW_REQUEST });
 
       const { data } = await axios.delete(
-  `https://style-in-backend.onrender.com/api/v1/product/reviews/delete?id=${reviewId}&productId=${productId}`
+  `https://style-in-backend.onrender.com/api/v1/product/reviews/delete?id=${reviewId}&productId=${productId}`,
+  { withCredentials: true }
 );
 
       dispatch({
