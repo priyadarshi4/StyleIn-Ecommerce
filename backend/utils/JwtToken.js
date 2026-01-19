@@ -9,11 +9,12 @@ const sendJWtToken = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
+
     httpOnly: true,
 
-    // 🔥 REQUIRED for Vercel ↔ Render (cross-domain)
-    secure: process.env.NODE_ENV === "production", // HTTPS only in prod
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    // 🔥 REQUIRED for Vercel ↔ Render cross-domain cookies
+    secure: true,          // MUST be true on Render (HTTPS)
+    sameSite: "none",      // REQUIRED for cross-site cookies
   };
 
   // Send cookie + response
