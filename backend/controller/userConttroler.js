@@ -5,6 +5,7 @@ const sendJWtToken = require("../utils/JwtToken");
 const sendOTPEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
+const otpEmailTemplate = require("../utils/otpEmailTemplate");
 
 // In-memory OTP store (use Redis in production for scalability)
 const otpStore = {};
@@ -36,24 +37,6 @@ exports.registerUser = asyncWrapper(async (req, res, next) => {
 const otp = generateOTP();
 
 otpStore[email] = {
-  otp: String(otp), // 🔐 always store as string
-  expires: Date.now() + 5 * 60 * 1000, // 5 minutes
-  userData: {
-    name,
-    password,
-    avatar: req.body.avatar || "",
-  },
-};
-
-// ============================
-// Send OTP Email
-// ============================
-try {
-  // Generate OTP
-const otp = generateOTP();
-
-// Store OTP
-otpStore[email] = {
   otp,
   expires: Date.now() + 5 * 60 * 1000,
   userData: { name, password, avatar: req.body.avatar },
@@ -61,50 +44,22 @@ otpStore[email] = {
 
 try {
   await sendEmail({
-    email,
+    to: email,
     subject: "StyleIn Account Verification",
-    html: `
-      <div style="font-family: Arial; padding:20px">
-        <h2>Verify your email</h2>
-        <p>Hello <b>${name}</b>,</p>
-        <p>Your OTP is:</p>
-        <h1 style="letter-spacing:6px">${otp}</h1>
-        <p>Valid for 5 minutes.</p>
-        <p>If you didn’t request this, ignore this email.</p>
-        <br/>
-        <b>— Team StyleIn</b>
-      </div>
-    `,
+    html: otpEmailTemplate(name, otp),
   });
+
+  console.log(`✅ OTP sent to ${email}`);
 
   res.status(200).json({
     success: true,
-    message: `OTP sent to ${email}`,
+    message: `OTP sent to ${email} successfully`,
   });
 } catch (error) {
+  console.error("❌ OTP send failed:", error);
   delete otpStore[email];
   return next(new ErrorHandler("Failed to send OTP", 500));
 }
-
-
-
-  console.log("✅ OTP email queued for:", email);
-
-  res.status(200).json({
-    success: true,
-    message: `OTP sent to ${email}`,
-  });
-
-} catch (error) {
-  console.error("❌ OTP EMAIL FAILED:", error.message);
-
-  delete otpStore[email];
-
-  return next(
-    new ErrorHandler("Failed to send OTP. Please try again.", 500)
-  );
-}
-
 
 });
 

@@ -2,19 +2,19 @@ const { Resend } = require("resend");
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const sendEmail = async ({ email, subject, html }) => {
+const sendEmail = async ({ to, subject, html }) => {
   try {
-    const result = await resend.emails.send({
-      from: "StyleIn <onboarding@resend.dev>",
-      to: email,
+    const response = await resend.emails.send({
+      from: "StyleIn <onboarding@resend.dev>", // keep this
+      to,
       subject,
       html,
     });
 
-    console.log("✅ OTP email sent:", result.id);
-    return result;
+    console.log("✅ Email sent:", response.id);
+    return response;
   } catch (error) {
-    console.error("❌ RESEND ERROR:", error);
+    console.error("❌ Email send failed:", error);
     throw error;
   }
 };
