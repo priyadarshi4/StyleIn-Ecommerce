@@ -1,3 +1,7 @@
+//config =>
+require("dotenv").config({ path: "./config/config.env" });
+
+
 const app = require("./app");
 const dotenv = require("dotenv");
 const connectDB = require("./db/connectDB")
@@ -15,9 +19,6 @@ process.on("uncaughtException", (err) => {
     process.exit(1);
 })
 
-
-//config =>
-dotenv.config({path : "backend/config/config.env"})
 
 // Validate essential environment variables
 const requiredEnvVars = ['JWT_SECRET'];

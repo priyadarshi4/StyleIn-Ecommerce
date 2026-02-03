@@ -11,7 +11,7 @@ import { useAlert } from "react-alert";
 import HeroSlider from "./HeroSilder";
 import FeaturedSlider from "./FeatureSlider";
 import shuffleArray from "../../utils/shuffleArray";
-
+import FloatingBot from "../chatbot/FloatingBot";
 import promoBanner from "../../Image/Cricket-wepon/WhatsApp Image 2026-01-17 at 06.54.59.jpeg";
 import SpinWheel from "./SpinWheel/SpinWheel";
 
@@ -126,7 +126,10 @@ const promoProducts = shuffledProducts.slice(0, 4);
                 <FeaturedSlider products={featuredProducts} />
               )}
             </motion.section>
-
+               <>
+      {/* your existing layout & routes */}
+      <FloatingBot />
+    </>
             {/* TRENDING PRODUCTS */}
             <motion.section
               className="trending_section"
@@ -154,7 +157,6 @@ const promoProducts = shuffledProducts.slice(0, 4);
                   />
                 ))}
               </motion.div>
-
               {/* MORE PRODUCTS BUTTON */}
               <div className="moreProductsWrapper">
                 <Link to="/products">

@@ -9,6 +9,8 @@ import CricketBallLoader from "./component/layouts/loader/Loader";
 import PrivateRoute from "./component/Route/PrivateRoute";
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import "./App.css";
+import ChatBot from "./component/chatbot/ChatBot";
+import FloatingBot from "./component/chatbot/FloatingBot";
 
 import Header from "./component/layouts/Header1.jsx/Header";
 import Payment from "./component/Cart/Payment";
@@ -99,9 +101,10 @@ function App() {
   return (
     <>
       <Router>
+        
       <SpeedInsights/>
         <Switch>
-       
+        
           <Route
             exact
             path="/"
@@ -295,7 +298,17 @@ function App() {
               </>
             )}
           />
-
+            <Route
+                exact
+                path="/chatbot"
+                render={() => (
+                  <>
+                    <Header />
+                    <ChatBot />
+                    <Footer />
+                  </>
+                )}
+              />
           <Route
             exact
             path="/account"
@@ -466,6 +479,8 @@ function App() {
             <PrivateRoute exact path="/process/payment" component={Payment} />
           </Route>
         </Elements>
+        <FloatingBot />
+
       </Router>
     </>
   );

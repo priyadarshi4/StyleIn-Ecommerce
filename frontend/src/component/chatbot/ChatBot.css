@@ -1,0 +1,222 @@
+/* ================================
+   CHAT PAGE WRAPPER
+================================ */
+.chat_page_container {
+  min-height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #f7f7f7 40%,
+    #ffffff 100%
+  );
+}
+
+/* ================================
+   MAIN CHAT CARD
+================================ */
+.chatbox {
+  width: 100%;
+  max-width: 980px;
+  height: 72vh;
+  background: linear-gradient(180deg, #0b0b15, #121226);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+/* ================================
+   HEADER
+================================ */
+.chat-header {
+  padding: 18px 22px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #f27528dc, #5514e1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ================================
+   BODY
+================================ */
+.chat-body {
+  flex: 1;
+  padding: 26px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ================================
+   MESSAGE BUBBLES
+================================ */
+.msg {
+  max-width: 70%;
+  padding: 14px 18px;
+  border-radius: 18px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  animation: fadeUp 0.3s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* USER MESSAGE */
+.msg.user {
+  margin-left: auto;
+  color: #fff;
+  background: linear-gradient(135deg, #6a00ff, #9a4dff);
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 8px 20px rgba(106,0,255,0.35);
+}
+
+/* BOT MESSAGE */
+.msg.bot {
+  color: #eaeaf0;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(6px);
+  border-bottom-left-radius: 6px;
+}
+
+/* ================================
+   FOOTER
+================================ */
+.chat-footer {
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.65),
+    rgba(0,0,0,0.35)
+  );
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* INPUT */
+.chat-footer input {
+  flex: 1;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  color: #fff;
+  outline: none;
+  font-size: 14px;
+}
+
+.chat-footer input::placeholder {
+  color: #bdbdd6;
+}
+
+/* SEND BUTTON */
+.chat-footer button {
+  min-width: 52px;
+  background: linear-gradient(135deg, #f27528dc, #5514e1);
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.chat-footer button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(106,0,255,0.4);
+}
+
+/* ================================
+   FLOATING BOT (UNCHANGED, MATCHED)
+================================ */
+.floating_bot {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  width: 62px;
+  height: 62px;
+  background: linear-gradient(135deg, #f27528dc, #5514e1);
+  color: #fff;
+  font-size: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.4);
+  z-index: 9999;
+}
+
+/* CLOSE BUTTON */
+.chat-close-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  font-size: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.chat-close-btn:hover {
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.05);
+}
+/* MIC BUTTON */
+.mic-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 18px;
+  padding: 0 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.mic-btn:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* LISTENING ANIMATION */
+.mic-btn.active {
+  background: linear-gradient(135deg, #ff4d6d, #6a00ff);
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255,77,109,0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255,77,109,0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255,77,109,0);
+  }
+}
