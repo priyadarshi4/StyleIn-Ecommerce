@@ -308,7 +308,7 @@ menu_contact: {
             }}
             onClick={handleCall}
           >
-            6201088656
+            62xxxxxxxxx
           </strong>
           .
         </Typography>

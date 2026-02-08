@@ -119,7 +119,7 @@ const About_UsPage = () => {
 </Typography>
 
 <Typography variant="body1" className={classes.infoText_about}>
-  <b>Style In</b> was founded by <b>Priyadarshi Prince</b>, a passionate
+  <b>Style In</b> was founded by <b>Group Of Stuents</b>, Whor are  passionate
   entrepreneur and a <b>3rd year B.Tech student at IIT Patna</b>, with a
   vision to build a modern ecommerce brand that truly connects with the
   new generation.
@@ -127,7 +127,7 @@ const About_UsPage = () => {
 
 <Typography variant="body1" className={classes.infoText_about}>
   Driven by creativity, technology, and a deep understanding of youth
-  culture, Priyadarshi started Style In to create a platform where fashion
+  culture, They started Style In to create a platform where fashion
   meets individuality. The goal was simple — to make trend-driven,
   high-quality fashion accessible, affordable, and relevant for today’s
   lifestyle.
