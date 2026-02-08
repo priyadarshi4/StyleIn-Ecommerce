@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Container, Grid, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import MetaData from "../component/layouts/MataData/MataData";
-import TermsImage from "../Image/about/tc.jpg";
+import TermsImage from "../Image/about/tc.png";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   about_us: {
