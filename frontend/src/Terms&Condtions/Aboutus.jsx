@@ -119,7 +119,7 @@ const About_UsPage = () => {
 </Typography>
 
 <Typography variant="body1" className={classes.infoText_about}>
-  <b>Style In</b> was founded by <b>Group Of Stuents</b>, Whor are  passionate
+  <b>Style In</b> was founded by <b>Group Of Students</b>, Whor are  passionate
   entrepreneur and a <b>3rd year B.Tech student at IIT Patna</b>, with a
   vision to build a modern ecommerce brand that truly connects with the
   new generation.
