@@ -12,8 +12,9 @@ import HeroSlider from "./HeroSilder";
 import FeaturedSlider from "./FeatureSlider";
 import shuffleArray from "../../utils/shuffleArray";
 import FloatingBot from "../chatbot/FloatingBot";
-import promoBanner from "../../Image/Cricket-wepon/WhatsApp Image 2026-01-17 at 06.54.59.jpeg";
+import promoBanner from "../../Image/Cricket-wepon/6994672-uhd_3840_2160_30fps.mp4";
 import SpinWheel from "./SpinWheel/SpinWheel";
+import promoBannerr from "../../Image/Cricket-wepon/3817685061-preview.mp4";
 
 
 // Animation variants
@@ -203,20 +204,28 @@ const promoProducts = shuffledProducts.slice(0, 4);
 
 
 
-                  {/* RIGHT BIG BANNER */}
-                    <div className="promo_right">
-                      <img
-                        src={promoBanner}
-                        alt="Top Selling Smartphones"
-                      />
-                      <div className="promo_overlay">
-                        <h2>Top Selling Fashion Brand</h2>
-                        <p>Latest and Best Brands</p>
-                        <Link to="/products">
-                          <button>Explore Now →</button>
-                        </Link>
-                      </div>
-                    </div>
+                 {/* RIGHT BIG BANNER */}
+                <div className="promo_right">
+                  <video
+                    className="promo_video"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  >
+                    <source src={promoBanner} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+
+                  <div className="promo_overlay">
+                    <h2>Top Selling Fashion Brand</h2>
+                    <p>Latest and Best Brands</p>
+                    <Link to="/products">
+                      <button>Explore Now →</button>
+                    </Link>
+                  </div>
+                </div>
+
 
 
                 </div>
@@ -247,6 +256,21 @@ const promoProducts = shuffledProducts.slice(0, 4);
 </section>
 {/* STYLE IN HERO SECTION */}
 <section className="stylein_hero">
+
+  {/* BACKGROUND VIDEO */}
+  <video
+    className="stylein_bgvideo"
+    autoPlay
+    loop
+    muted
+    playsInline
+  >
+    <source src={promoBannerr} type="video/mp4" />
+  </video>
+
+  {/* DARK OVERLAY */}
+  <div className="stylein_overlay"></div>
+
   <div className="stylein_container">
 
     {/* LEFT CONTENT */}
@@ -271,6 +295,7 @@ const promoProducts = shuffledProducts.slice(0, 4);
 
   </div>
 </section>
+
 
           </div>
         </>
