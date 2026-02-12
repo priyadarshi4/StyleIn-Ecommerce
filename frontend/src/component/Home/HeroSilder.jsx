@@ -227,7 +227,7 @@ const buttonVariants = {
 
 const slides = [
   {
-    image: require("../../Image/Cricket-wepon/black-friday-super-sale-facebook-cover-banner-template_120329-5177.avif"),
+    image: require("../../Image/Cricket-wepon/723258011aed43ec7b5da95e644f182b.jpg"),
     mobileImage: require("../../Image/Cricket-wepon/img2_mobile.jpg"), // Add mobile-specific image here
     tagline: "Premium Collection",
     quote: "Upgrade Your Style Instantly",
