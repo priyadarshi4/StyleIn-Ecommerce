@@ -183,10 +183,8 @@ const [selectedCategory, setSelectedCategory] = React.useState(urlCategory || "A
                       itemsCountPerPage={resultPerPage}
                       totalItemsCount={productsCount}
                       onChange={setCurrentPageNoHandler}
-                      nextPageText="Next"
-                      prevPageText="Prev"
-                      firstPageText="First"
-                      lastPageText="Last"
+                      
+                      
                       itemClass="page-item"
                       linkClass="page-link"
                       activeClass="pageItemActive"
@@ -469,10 +467,10 @@ const [selectedCategory, setSelectedCategory] = React.useState(urlCategory || "A
                     itemsCountPerPage={resultPerPage}
                     totalItemsCount={productsCount}
                     onChange={setCurrentPageNoHandler}
-                    nextPageText="Next"
-                    prevPageText="Prev"
-                    firstPageText="First"
-                    lastPageText="Last"
+                    
+                    
+                    
+                    
                     itemClass="page-item"
                     linkClass="page-link"
                     activeClass="pageItemActive"
