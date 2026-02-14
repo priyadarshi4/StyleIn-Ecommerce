@@ -15,6 +15,7 @@ import FloatingBot from "../chatbot/FloatingBot";
 import promoBanner from "../../Image/Cricket-wepon/6994672-uhd_3840_2160_30fps.mp4";
 import SpinWheel from "./SpinWheel/SpinWheel";
 import promoBannerr from "../../Image/Cricket-wepon/video-Fashion-Business-Video-dd66f89e-9144-44b1-8d41-983956ae6edd.mp4";
+import CategorySection from "./CategorySection";
 
 
 // Animation variants
@@ -109,7 +110,8 @@ const promoProducts = shuffledProducts.slice(0, 4);
             >
               <HeroSlider />
             </motion.div>
-
+            
+            <CategorySection />
             {/* FEATURED PRODUCTS */}
             <motion.section
               className="featured_section"

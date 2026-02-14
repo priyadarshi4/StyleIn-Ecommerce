@@ -3,7 +3,7 @@ import "./Products.css";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../layouts/loader/Loader";
 import { useAlert } from "react-alert";
-import { useRouteMatch, Link } from "react-router-dom";  // Added Link for navigation
+import { useRouteMatch, Link, useLocation } from "react-router-dom";  // Added Link for navigation
 import MetaData from "../layouts/MataData/MataData";
 import { clearErrors, getProduct } from "../../actions/productAction";
 import ProductCard from "../Home/ProductCard";
@@ -42,6 +42,9 @@ const categories = [
 function Products() {
   const match = useRouteMatch();
   let keyword = match.params.keyword;
+  const location = useLocation();
+  const urlCategory = new URLSearchParams(location.search).get("category");
+
   const dispatch = useDispatch();
   const {
     products,
@@ -57,9 +60,10 @@ function Products() {
 
   const [currentPage, setCurrentPage] = React.useState(1);  // Initialized to 1
   const [price, setPrice] = React.useState([0, 100000]);
-  const [category, setCategory] = React.useState("");
   const [ratings, setRatings] = React.useState(0);
-  const [selectedCategory, setSelectedCategory] = React.useState("All"); // Default to "All"
+  const [category, setCategory] = React.useState(urlCategory || "");
+const [selectedCategory, setSelectedCategory] = React.useState(urlCategory || "All");
+
   
   useEffect(() => {
     if (error) {
@@ -68,7 +72,14 @@ function Products() {
     }
     dispatch(getProduct(keyword, currentPage, price, category, ratings));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, keyword, currentPage, price, ratings, category]);
+  }, [dispatch, keyword, currentPage, price, ratings, category, urlCategory]);
+  useEffect(() => {
+  if (urlCategory) {
+    setCategory(urlCategory);
+    setSelectedCategory(urlCategory);
+    setCurrentPage(1);
+  }
+}, [urlCategory]);
 
   const setCurrentPageNoHandler = (e) => {
     setCurrentPage(e);
