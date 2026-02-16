@@ -402,13 +402,16 @@ const PaymentComponent = () => {
     // stripe takes payment in pese there for multiply with 100 bcz 1rs == 100 pese
     amount: Math.round(totalFinalPrice * 100),
   };
-  const payWithUPI = async () => {
+  
 
+  const API = process.env.REACT_APP_API_URL;
+
+const payWithUPI = async () => {
   try {
 
-    // STEP 1: Create Razorpay order
+    // CREATE ORDER
     const { data } = await axios.post(
-      "/api/v1/payment/razorpay-order",
+      `${API}/api/v1/payment/razorpay-order`,
       { amount: totalFinalPrice },
       { withCredentials: true }
     );
@@ -422,17 +425,17 @@ const PaymentComponent = () => {
 
       handler: async function (response) {
 
-        // STEP 2: verify payment
+        // VERIFY PAYMENT
         await axios.post(
-          "/api/v1/payment/verify-razorpay",
+          `${API}/api/v1/payment/verify-razorpay`,
           response,
           { withCredentials: true }
         );
 
-        // STEP 3: create order
+        // CREATE DB ORDER
         order.paymentInfo = {
           method: "UPI",
-          razorpay_payment_id: response.razorpay_payment_id
+          razorpay_payment_id: response.razorpay_payment_id,
         };
 
         dispatch(createOrder(order));
@@ -444,9 +447,11 @@ const PaymentComponent = () => {
     rzp.open();
 
   } catch (err) {
+    console.log("RAZORPAY ERROR:", err.response?.data || err.message);
     alert.error("UPI Payment failed");
   }
 };
+
 
   async function paymentSubmitHandler(e) {
     e.preventDefault();
