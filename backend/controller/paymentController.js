@@ -160,6 +160,7 @@ if (!paymentInfo || (paymentInfo.method !== "COD" && !paymentInfo.id && !payment
     if (!paymentInfo.razorpay_payment_id) {
       return next(new ErrorHandler("UPI payment not verified", 400));
     }
+    console.log("RAZORPAY KEY:", process.env.RAZORPAY_KEY_ID);
 
     orderData.paymentInfo = {
       method: "UPI",
