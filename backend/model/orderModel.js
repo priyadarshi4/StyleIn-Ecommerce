@@ -81,17 +81,22 @@ const orderSchema = new mongoose.Schema({
   },
 
   // ================= PAYMENT INFO =================
-  paymentInfo: {
-    id: {
-      type: String,
-      default: null, // COD orders don't need payment ID
-    },
-    status: {
-      type: String,
-      required: true,
-      enum: ["succeeded", "Cash on Delivery", "pending", "failed"],
-    },
+paymentInfo: {
+  method: {
+    type: String,
+    required: true,
+    enum: ["COD", "CARD", "UPI"],
   },
+  id: {
+    type: String,
+    default: null, // stripe id or razorpay id
+  },
+  status: {
+    type: String,
+    required: true,
+    enum: ["pending", "succeeded", "failed"],
+  },
+},
 
   // ================= PAYMENT TIME =================
   paidAt: {

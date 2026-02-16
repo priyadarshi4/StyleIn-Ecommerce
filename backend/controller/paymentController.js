@@ -1,112 +1,185 @@
 const asyncWrapper = require("../middleWare/asyncWrapper");
 const ErrorHandler = require("../utils/errorHandler");
-const OrdersModel = require("../model/orderModel"); // Import your order model
+const OrdersModel = require("../model/orderModel");
 
-// process the payment (for card payments)
+const razorpay = require("../config/razorpay");
+const crypto = require("crypto");
+
+/* ======================================================
+                STRIPE CARD PAYMENT
+====================================================== */
+
 exports.processPayment = asyncWrapper(async (req, res, next) => {
   const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-  console.log('=== PAYMENT PROCESSING ===');
-  console.log('Timestamp:', new Date().toISOString());
-  console.log('Amount:', req.body.amount);
-  console.log('User ID:', req.user?.id);
-  console.log('==========================');
-
-  // Validate payment amount
   if (!req.body.amount || req.body.amount <= 0) {
     return next(new ErrorHandler("Invalid payment amount", 400));
   }
 
-  // Validate amount is not too large (max 999999999 paise = 9999999.99 INR)
-  if (req.body.amount > 999999999) {
-    return next(new ErrorHandler("Payment amount too large", 400));
-  }
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: req.body.amount,
+    currency: "inr",
+    metadata: {
+      company: "StyleIn",
+      userId: req.user?._id.toString(),
+    },
+  });
 
-  try {
-    const myPayment = await stripe.paymentIntents.create({
-      amount: req.body.amount,
-      currency: "inr",
-      metadata: {
-        company: "Ecommerce",
-        userId: req.user?.id || 'unknown',
-        timestamp: new Date().toISOString()
-      },
-    });
-
-    console.log('Payment Intent Created:', myPayment.id);
-
-    res.status(200).json({ 
-      success: true, 
-      client_secret: myPayment.client_secret 
-    });
-  } catch (error) {
-    console.error('Stripe Payment Error:', error.message);
-    return next(new ErrorHandler("Payment processing failed", 500));
-  }
-});
-
-// send STRIPE_API_KEY to user =>
-exports.sendStripeApiKey = asyncWrapper(async (req, res, next) => {
-  if (!process.env.STRIPE_API_KEY) {
-    return next(new ErrorHandler("Stripe API key not configured", 500));
-  }
-  
-  res.status(200).json({ 
-    stripeApiKey: process.env.STRIPE_API_KEY 
+  res.status(200).json({
+    success: true,
+    client_secret: paymentIntent.client_secret,
   });
 });
 
-// Create order (handles both card and COD)
-exports.createOrder = asyncWrapper(async (req, res, next) => {
-  const { shippingInfo, orderItems, itemsPrice, shippingPrice, totalPrice, paymentInfo } = req.body;
+exports.sendStripeApiKey = asyncWrapper(async (req, res, next) => {
+  res.status(200).json({
+    stripeApiKey: process.env.STRIPE_API_KEY,
+  });
+});
 
-  // Validate required fields
-  if (!shippingInfo || !orderItems || !itemsPrice || !totalPrice || !paymentInfo) {
-    return next(new ErrorHandler("Missing required order details", 400));
+
+/* ======================================================
+                RAZORPAY UPI PAYMENT
+====================================================== */
+
+// STEP 1 → create razorpay order
+exports.createRazorpayOrder = asyncWrapper(async (req, res, next) => {
+
+  if (!req.body.amount || req.body.amount <= 0) {
+    return next(new ErrorHandler("Invalid payment amount", 400));
   }
 
-  // Ensure user is authenticated
+  const options = {
+    amount: req.body.amount * 100, // rupees → paise
+    currency: "INR",
+    receipt: "receipt_" + Date.now(),
+  };
+
+  const order = await razorpay.orders.create(options);
+
+  res.status(200).json({
+    success: true,
+    order,
+  });
+});
+
+
+// STEP 2 → verify payment signature
+exports.verifyRazorpayPayment = asyncWrapper(async (req, res, next) => {
+
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+  const body = razorpay_order_id + "|" + razorpay_payment_id;
+
+  const expectedSignature = crypto
+    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+    .update(body.toString())
+    .digest("hex");
+
+  if (expectedSignature !== razorpay_signature) {
+    return next(new ErrorHandler("UPI Payment verification failed", 400));
+  }
+
+  res.status(200).json({
+    success: true,
+    paymentId: razorpay_payment_id,
+  });
+});
+
+
+/* ======================================================
+                    CREATE ORDER (DB)
+        Works for COD + CARD + UPI
+====================================================== */
+
+exports.createDatabaseOrder = asyncWrapper(async (req, res, next) => {
+
+  const {
+    shippingInfo,
+    orderItems,
+    itemsPrice,
+    shippingPrice,
+    totalPrice,
+    paymentInfo
+  } = req.body;
+  // 🔒 Security: prevent fake free orders
+if (!paymentInfo || (paymentInfo.method !== "COD" && !paymentInfo.id && !paymentInfo.razorpay_payment_id)) {
+  return next(new ErrorHandler("Payment not completed", 400));
+}
+
+  if (!shippingInfo || !orderItems || !itemsPrice || !totalPrice || !paymentInfo) {
+    return next(new ErrorHandler("Missing order details", 400));
+  }
+
   if (!req.user) {
     return next(new ErrorHandler("User not authenticated", 401));
   }
 
-  try {
-    let orderData = {
-      shippingInfo,
-      orderItems,
-      user: req.user._id,
-      itemsPrice,
-      shippingPrice: shippingPrice || 0,
-      totalPrice,
-      paymentInfo,
-      orderStatus: "Processing", // Default status
+  let orderData = {
+    shippingInfo,
+    orderItems,
+    user: req.user._id,
+    itemsPrice,
+    shippingPrice: shippingPrice || 0,
+    totalPrice,
+    orderStatus: "Processing",
+  };
+
+  /* ================= PAYMENT HANDLING ================= */
+
+  // COD
+  if (paymentInfo.method === "COD") {
+
+    orderData.paymentInfo = {
+      method: "COD",
+      status: "pending"
     };
 
-    // Handle COD orders
-    if (paymentInfo.status === "Cash on Delivery") {
-      // For COD, no payment ID needed, and paidAt can be null or set to now if you want
-      orderData.paidAt = null; // Or set to Date.now() if you consider it "paid" on delivery
-    } else if (paymentInfo.status === "succeeded") {
-      // For card payments, ensure payment ID is present and set paidAt
-      if (!paymentInfo.id) {
-        return next(new ErrorHandler("Payment ID required for card payments", 400));
-      }
-      orderData.paidAt = Date.now();
-    } else {
-      return next(new ErrorHandler("Invalid payment status", 400));
+    orderData.paidAt = null;
+  }
+
+  // STRIPE CARD
+  else if (paymentInfo.method === "CARD") {
+
+    if (!paymentInfo.id) {
+      return next(new ErrorHandler("Card payment not confirmed", 400));
     }
 
-    // Create the order
-    const order = await OrdersModel.create(orderData);
+    orderData.paymentInfo = {
+      method: "CARD",
+      id: paymentInfo.id,
+      status: "succeeded"
+    };
 
-    console.log('Order Created:', order._id, 'Payment Status:', paymentInfo.status);
-
-    res.status(201).json({
-      success: true,
-      order,
-    });
-  } catch (error) {
-    console.error('Order Creation Error:', error.message);
-    return next(new ErrorHandler("Order creation failed", 500));
+    orderData.paidAt = Date.now();
   }
+
+  // RAZORPAY UPI
+  else if (paymentInfo.method === "UPI") {
+
+    if (!paymentInfo.razorpay_payment_id) {
+      return next(new ErrorHandler("UPI payment not verified", 400));
+    }
+
+    orderData.paymentInfo = {
+      method: "UPI",
+      id: paymentInfo.razorpay_payment_id,
+      status: "succeeded"
+    };
+
+    orderData.paidAt = Date.now();
+  }
+
+  else {
+    return next(new ErrorHandler("Invalid payment method", 400));
+  }
+
+  /* ================= CREATE ORDER ================= */
+
+  const order = await OrdersModel.create(orderData);
+
+  res.status(201).json({
+    success: true,
+    order,
+  });
 });

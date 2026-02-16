@@ -1,6 +1,5 @@
 const express = require("express");
 const {
-  newOrder,
   getSingleOrder,
   myOrders,
   getAllOrders,
@@ -8,12 +7,17 @@ const {
   deleteOrder,
 } = require("../controller/orderController");
 
+// import secure order creator from paymentController
+const { createDatabaseOrder } = require("../controller/paymentController");
+
+
 const { isAuthentictedUser, authorizeRoles } = require("../middleWare/auth");
 
 const router = express.Router();
 
 // Create new order (COD + Stripe)
-router.route("/order/new").post(isAuthentictedUser, newOrder);
+router.route("/order/new").post(isAuthentictedUser, createDatabaseOrder);
+
 
 // Get single order
 router.route("/order/:id").get(isAuthentictedUser, getSingleOrder);

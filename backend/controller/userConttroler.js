@@ -8,6 +8,7 @@ const cloudinary = require("cloudinary");
 const otpEmailTemplate = require("../utils/otpEmailTemplate");
 const sendEmail = require("../utils/sendEmail");
 
+
 // In-memory OTP store (use Redis in production for scalability)
 const otpStore = {};
 
