@@ -529,48 +529,45 @@ function ProcessOrder() {
                 </div>
 
                 <div
-                  className={`${classes.total_price__prodcessOrder} ${classes.order_Summary_Item__prodcessOrder}`}
-                >
-                  <div>
-                    <h4>Payment Status</h4>
-                  </div>
-                  <p
+                    className={`${classes.total_price__prodcessOrder} ${classes.order_Summary_Item__prodcessOrder}`}
+                  >
+                    <div>
+                      <h4>Payment Status</h4>
+                    </div>
+
+                    <p
                       className={
-                        order.paymentInfo?.status === "paid" ||
-                        (order.paymentInfo?.method === "COD" && order.orderStatus === "Delivered")
+                        order?.paymentInfo?.status === "paid" ||
+                        (order?.paymentInfo?.method === "COD" && order?.orderStatus === "Delivered")
                           ? classes.greenFont
                           : classes.redFont
                       }
                     >
                       <b>
                         {(() => {
-                          if (!order.paymentInfo) return "Payment Pending";
+                          if (!order || !order.paymentInfo) return "Loading...";
 
-                          const { method, status } = order.paymentInfo;
+                          const method = order.paymentInfo.method;
 
-                          // ===== COD =====
+                          // COD
                           if (method === "COD") {
                             return order.orderStatus === "Delivered"
                               ? "Paid on Delivery"
                               : "Cash on Delivery";
                           }
 
-                          // ===== UPI =====
-                          if (method === "UPI") {
-                            return "Paid via UPI";
-                          }
+                          // UPI
+                          if (method === "UPI") return "Paid via UPI";
 
-                          // ===== CARD =====
-                          if (method === "CARD") {
-                            return "Paid via Card";
-                          }
+                          // CARD
+                          if (method === "CARD") return "Paid via Card";
 
                           return "Payment Pending";
                         })()}
                       </b>
                     </p>
+                  </div>
 
-                </div>
 
                 {order.orderStatus && (
                   <>
