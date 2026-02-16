@@ -404,7 +404,11 @@ const PaymentComponent = () => {
   };
   
 
-  const API = process.env.REACT_APP_API_URL;
+const API =
+  window.location.hostname === "localhost"
+    ? "http://localhost:4000"
+    : "https://style-in-backend.onrender.com";
+
 
 const payWithUPI = async () => {
   try {
@@ -417,7 +421,11 @@ const payWithUPI = async () => {
     );
 
     const options = {
-      key: process.env.REACT_APP_RAZORPAY_KEY,
+      key:
+  window.location.hostname === "localhost"
+    ? "rzp_test_xxxxxxxxx"
+    : "rzp_live_SGtZcrblRoMROW",
+
       amount: data.order.amount,
       currency: "INR",
       order_id: data.order.id,
