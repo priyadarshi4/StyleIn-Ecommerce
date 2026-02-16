@@ -2,7 +2,7 @@ const asyncWrapper = require("../middleWare/asyncWrapper");
 const ErrorHandler = require("../utils/errorHandler");
 const OrdersModel = require("../model/orderModel");
 
-const getRazorpayInstance = require("../config/razorpay");
+const razorpay = require("../config/razorpay");
 const crypto = require("crypto");
 
 /* ======================================================
@@ -50,14 +50,12 @@ exports.createRazorpayOrder = asyncWrapper(async (req, res, next) => {
   }
 
   const options = {
-    amount: req.body.amount * 100, // rupees → paise
+    amount: req.body.amount * 100,
     currency: "INR",
     receipt: "receipt_" + Date.now(),
   };
 
-  const razorpay = getRazorpayInstance();
-const order = await razorpay.orders.create(options);
-
+  const order = await razorpay.orders.create(options);
 
   res.status(200).json({
     success: true,
