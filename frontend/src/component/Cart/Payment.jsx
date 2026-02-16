@@ -402,6 +402,51 @@ const PaymentComponent = () => {
     // stripe takes payment in pese there for multiply with 100 bcz 1rs == 100 pese
     amount: Math.round(totalFinalPrice * 100),
   };
+  const payWithUPI = async () => {
+
+  try {
+
+    // STEP 1: Create Razorpay order
+    const { data } = await axios.post(
+      "/api/v1/payment/razorpay-order",
+      { amount: totalFinalPrice },
+      { withCredentials: true }
+    );
+
+    const options = {
+      key: process.env.REACT_APP_RAZORPAY_KEY,
+      amount: data.order.amount,
+      currency: "INR",
+      order_id: data.order.id,
+      name: "Style In",
+
+      handler: async function (response) {
+
+        // STEP 2: verify payment
+        await axios.post(
+          "/api/v1/payment/verify-razorpay",
+          response,
+          { withCredentials: true }
+        );
+
+        // STEP 3: create order
+        order.paymentInfo = {
+          method: "UPI",
+          razorpay_payment_id: response.razorpay_payment_id
+        };
+
+        dispatch(createOrder(order));
+        history.push("/success");
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+
+  } catch (err) {
+    alert.error("UPI Payment failed");
+  }
+};
 
   async function paymentSubmitHandler(e) {
     e.preventDefault();
@@ -473,10 +518,11 @@ const PaymentComponent = () => {
         } else {
           if (result.paymentIntent.status === "succeeded") {
             // add new property inside order object
-            order.paymentInfo = {
-              id: result.paymentIntent.id,
-              status: result.paymentIntent.status,
+           order.paymentInfo = {
+              method: "CARD",
+              id: result.paymentIntent.id
             };
+
             alert.success(result.paymentIntent.status);
 
             dispatch(createOrder(order));
@@ -506,12 +552,17 @@ const PaymentComponent = () => {
     } else if (paymentMethod === "cod") {
       // For Cash on Delivery, directly create the order without payment processing
       order.paymentInfo = {
-        status: "Cash on Delivery",
-      };
+            method: "COD"
+          };
+
       dispatch(createOrder(order));
       alert.success("Order placed successfully with Cash on Delivery");
       history.push("/success");
     }
+    else if (paymentMethod === "upi") {
+  await payWithUPI();
+}
+
   }
 
   useEffect(() => {
@@ -587,6 +638,18 @@ const PaymentComponent = () => {
                   Cash on Delivery
                 </Typography>
               </div>
+                <div className={classes.cardSelection}>
+                    <Radio
+                      value="upi"
+                      name="paymentMethod"
+                      className={classes.radio}
+                      checked={paymentMethod === "upi"}
+                      onChange={handlePaymentMethodChange}
+                    />
+                    <Typography variant="subtitle2" className={classes.radioText}>
+                      UPI (GPay / PhonePe / Paytm)
+                    </Typography>
+                  </div>
 
               {/* Conditionally render card details only if card is selected */}
               {paymentMethod === "card" && (
