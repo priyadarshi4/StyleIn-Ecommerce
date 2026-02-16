@@ -36,19 +36,38 @@ exports.newOrder = asyncWrapper(async (req, res, next) => {
 
   // ================= PAID AT LOGIC =================
   let paidAt = null;
+let finalPaymentInfo = {};
 
-  if (paymentInfo.status === "succeeded") {
-    if (!paymentInfo.id) {
-      return next(
-        new ErrorHandler("Payment ID required for card payment", 400)
-      );
-    }
-    paidAt = Date.now();
-  } else if (paymentInfo.status === "Cash on Delivery") {
-    paidAt = null;
-  } else {
-    return next(new ErrorHandler("Invalid payment status", 400));
+// CARD OR UPI (already paid online)
+if (paymentInfo.method === "CARD" || paymentInfo.method === "UPI") {
+
+  if (!paymentInfo.id && !paymentInfo.razorpay_payment_id) {
+    return next(new ErrorHandler("Online payment verification failed", 400));
   }
+
+  finalPaymentInfo = {
+    method: paymentInfo.method,
+    id: paymentInfo.id || paymentInfo.razorpay_payment_id,
+    status: "paid",
+  };
+
+  paidAt = Date.now();
+}
+
+// COD (not paid yet)
+else if (paymentInfo.method === "COD") {
+
+  finalPaymentInfo = {
+    method: "COD",
+    status: "not_paid",
+  };
+
+  paidAt = null;
+}
+
+else {
+  return next(new ErrorHandler("Invalid payment method", 400));
+}
 
   // ================= CREATE ORDER =================
   const order = await orderModel.create({
@@ -61,7 +80,7 @@ exports.newOrder = asyncWrapper(async (req, res, next) => {
       productId: item.productId,
       size: item.size || null, // ✅ SIZE SAVED
     })),
-    paymentInfo,
+    paymentInfo: finalPaymentInfo,
     itemsPrice,
     taxPrice: taxPrice || 0,
     shippingPrice: shippingPrice || 0,
@@ -160,9 +179,16 @@ exports.updateOrder = asyncWrapper(async (req, res, next) => {
 
   order.orderStatus = req.body.status;
 
-  if (req.body.status === "Delivered") {
-    order.deliveredAt = Date.now();
+if (req.body.status === "Delivered") {
+  order.deliveredAt = Date.now();
+
+  // COD becomes paid after delivery
+  if (order.paymentInfo.method === "COD") {
+    order.paymentInfo.status = "paid";
+    order.paidAt = Date.now();
   }
+}
+
 
   await order.save({ validateBeforeSave: false });
 

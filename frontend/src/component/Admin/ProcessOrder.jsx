@@ -372,6 +372,12 @@ function ProcessOrder() {
     myForm.set("status", status);
     dispatch(updateOrder(productId, myForm));
   };
+  const isPaid =
+  order.paymentInfo &&
+  (
+    order.paymentInfo.status === "paid" || 
+    (order.paymentInfo.method === "COD" && order.orderStatus === "Delivered")
+  );
   return (
     <>
       {loading ? (
@@ -528,20 +534,8 @@ function ProcessOrder() {
                   <div>
                     <h4>Payment Status</h4>
                   </div>
-                  <p
-                    className={
-                      order.orderStatus && order.orderStatus === "Delivered"
-                        ? `${classes.greenFont}`
-                        : `${classes.redFont}`
-                    }
-                  >
-                    <b className={classes.greenFont}>
-                      {" "}
-                      {order.paymentInfo &&
-                      order.paymentInfo.status === "succeeded"
-                        ? "PAID"
-                        : "NOT PAID"}
-                    </b>
+                  <p className={isPaid ? classes.greenFont : classes.redFont}>
+                    <b>{isPaid ? "PAID" : "NOT PAID"}</b>
                   </p>
                 </div>
 
