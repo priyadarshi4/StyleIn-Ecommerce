@@ -534,9 +534,42 @@ function ProcessOrder() {
                   <div>
                     <h4>Payment Status</h4>
                   </div>
-                  <p className={isPaid ? classes.greenFont : classes.redFont}>
-                    <b>{isPaid ? "PAID" : "NOT PAID"}</b>
-                  </p>
+                  <p
+                      className={
+                        order.paymentInfo?.status === "paid" ||
+                        (order.paymentInfo?.method === "COD" && order.orderStatus === "Delivered")
+                          ? classes.greenFont
+                          : classes.redFont
+                      }
+                    >
+                      <b>
+                        {(() => {
+                          if (!order.paymentInfo) return "Payment Pending";
+
+                          const { method, status } = order.paymentInfo;
+
+                          // ===== COD =====
+                          if (method === "COD") {
+                            return order.orderStatus === "Delivered"
+                              ? "Paid on Delivery"
+                              : "Cash on Delivery";
+                          }
+
+                          // ===== UPI =====
+                          if (method === "UPI") {
+                            return "Paid via UPI";
+                          }
+
+                          // ===== CARD =====
+                          if (method === "CARD") {
+                            return "Paid via Card";
+                          }
+
+                          return "Payment Pending";
+                        })()}
+                      </b>
+                    </p>
+
                 </div>
 
                 {order.orderStatus && (
