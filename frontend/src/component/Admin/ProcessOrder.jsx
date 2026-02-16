@@ -372,12 +372,7 @@ function ProcessOrder() {
     myForm.set("status", status);
     dispatch(updateOrder(productId, myForm));
   };
-  const isPaid =
-  order.paymentInfo &&
-  (
-    order.paymentInfo.status === "paid" || 
-    (order.paymentInfo.method === "COD" && order.orderStatus === "Delivered")
-  );
+  
   return (
     <>
       {loading ? (
@@ -537,17 +532,18 @@ function ProcessOrder() {
 
                     <p
                       className={
-                        order?.paymentInfo?.status === "paid" ||
-                        (order?.paymentInfo?.method === "COD" && order?.orderStatus === "Delivered")
+                        (order.paymentInfo?.method !== "COD" && order.paymentInfo?.status === "succeeded") ||
+                        (order.paymentInfo?.method === "COD" && order.orderStatus === "Delivered")
                           ? classes.greenFont
                           : classes.redFont
                       }
                     >
                       <b>
                         {(() => {
-                          if (!order || !order.paymentInfo) return "Loading...";
+                          const method = order.paymentInfo?.method;
+                          const status = order.paymentInfo?.status;
 
-                          const method = order.paymentInfo.method;
+                          if (!method) return "Loading...";
 
                           // COD
                           if (method === "COD") {
@@ -557,13 +553,18 @@ function ProcessOrder() {
                           }
 
                           // UPI
-                          if (method === "UPI") return "Paid via UPI";
+                          if (method === "UPI") {
+                            return status === "succeeded" ? "Paid via UPI" : "UPI Pending";
+                          }
 
                           // CARD
-                          if (method === "CARD") return "Paid via Card";
+                          if (method === "CARD") {
+                            return status === "succeeded" ? "Paid via Card" : "Card Pending";
+                          }
 
                           return "Payment Pending";
                         })()}
+
                       </b>
                     </p>
                   </div>
