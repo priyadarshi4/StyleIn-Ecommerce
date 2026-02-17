@@ -3,65 +3,103 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
+
+  /* CARD CONTAINER */
   rootPayment: {
+  width: "100%",
+  display: "flex",
+  gap: "14px",
+  padding: "12px",
+  borderRadius: "12px",
+  background: "#fff",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+  boxSizing: "border-box",
+  minWidth: 0,
+
+  [theme.breakpoints.down("sm")]: {
+    borderRadius: "14px",
     width: "100%",
-    display: "flex",
-    gap: "2.5rem",
-    padding: "1rem 0rem 0rem 0rem",
-    
-      
-
-
   },
+},
+
+
+  /* PRODUCT IMAGE */
   image: {
-    width: "155px",
-    height: "140px",
-    objectFit: "cover",
-    [theme.breakpoints.down(899)]: {
-      width: "255px",
-      height: "240px",
+    width: "120px",
+    height: "130px",
+    objectFit: "contain",
+    background: "#f7f7f7",
+    borderRadius: "10px",
+    padding: "6px",
+    flexShrink: 0,
+
+    [theme.breakpoints.down("sm")]: {
+      width: "95px",
+      height: "105px",
     },
   },
+
+  /* TEXT SIDE */
   details: {
     flex: 1,
     display: "flex",
     flexDirection: "column",
+    minWidth: 0, // ⭐ prevents overflow
   },
+
+  /* TITLE */
   productName: {
-    fontWeight: "500",
-    fontSize: "18px",
-    marginBottom: theme.spacing(1),
+    fontWeight: 600,
+    fontSize: "15px",
+    marginBottom: "6px",
+    lineHeight: 1.3,
+    wordBreak: "break-word",
+
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "13px",
+    },
   },
+
+  /* META INFO */
   quantity: {
-    fontSize: 16,
-    marginBottom: theme.spacing(1),
-    color: "#00000080",
+    fontSize: 13,
+    marginBottom: "6px",
+    color: "#666",
   },
+
+  /* PRICE ROW */
   priceContainer: {
     display: "flex",
     alignItems: "center",
+    gap: "10px",
+    marginTop: "4px",
   },
+
   finalPrice: {
-    fontWeight: 400,
-    fontSize: 16,
+    fontWeight: 700,
+    fontSize: 15,
   },
+
   discountPrice: {
     textDecoration: "line-through",
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2),
-    fontSize: 16,
+    color: "#888",
+    fontSize: 13,
   },
-  paymentStatus: {
-    color: "green",
-    fontSize: 16,
-    marginTop: theme.spacing(1),
-  },
-  paymentValue: {
 
-    fontWeight: 400,
-    marginRight: "10px",
-    color: "#00000080",
+  /* PAYMENT STATUS */
+  paymentStatus: {
+    marginTop: "auto",
+    fontSize: 13,
+    fontWeight: 600,
+    color: "green",
   },
+
+  paymentValue: {
+    fontWeight: 400,
+    marginRight: "6px",
+    color: "#777",
+  },
+
 }));
 
 const OrderDetailsSection = ({ item, totalDiscount, totalPrice }) => {
@@ -70,43 +108,38 @@ const OrderDetailsSection = ({ item, totalDiscount, totalPrice }) => {
   return (
     <div className={classes.rootPayment}>
       <img src={item.image} alt={item.name} className={classes.image} />
-      <div className={classes.details}>
-        <Typography variant="subtitle1" className={classes.productName}>
-            {item.name}
-            {item.size && (
-              <span style={{ fontSize: "14px", color: "#555", marginLeft: "6px" }}>
-                | Size: <b>{item.size}</b>
-              </span>
-            )}
-          </Typography>
 
-        <Typography variant="body2" className={classes.quantity}>
-          <span
-            style={{ fontWeight: 400, marginRight: "10px", color: "#00000080" }}
-          >
-            Quantity:
-          </span>{" "}
-          {item.quantity}
+      <div className={classes.details}>
+        <Typography className={classes.productName}>
+          {item.name}
+          {item.size && (
+            <span style={{ fontSize: "12px", color: "#555" }}>
+              {" "} | Size: <b>{item.size}</b>
+            </span>
+          )}
         </Typography>
+
+        <Typography className={classes.quantity}>
+          Qty: {item.quantity}
+        </Typography>
+
         <div className={classes.priceContainer}>
-          <Typography variant="body2" className={classes.finalPrice}>
+          <Typography className={classes.finalPrice}>
             {totalPrice}
           </Typography>
-          <Typography variant="body2" className={classes.discountPrice}>
+          <Typography className={classes.discountPrice}>
             {totalDiscount}
           </Typography>
         </div>
-                  <div>
-            <Typography variant="body2" className={classes.paymentStatus}>
-              <span className={classes.paymentValue}>Payment:</span>
-              {item.paymentInfo?.status === "Cash on Delivery"
-                ? "Cash on Delivery"
-                : item.paymentInfo?.status === "succeeded"
-                ? "Online Payment"
-                : "Pending"}
-            </Typography>
-          </div>
 
+        <Typography className={classes.paymentStatus}>
+          <span className={classes.paymentValue}>Payment:</span>
+          {item.paymentInfo?.status === "Cash on Delivery"
+            ? "Cash on Delivery"
+            : item.paymentInfo?.status === "succeeded"
+            ? "Online Payment"
+            : "Pending"}
+        </Typography>
       </div>
     </div>
   );

@@ -47,12 +47,21 @@ import {
 } from "../DisplayMoney/DisplayMoney";
 
 const useStyles = makeStyles((theme) => ({
-  payemntPage: {
-    padding: "1rem 0",
-    width: "100%",
-    backgroundColor: "white",
-    overFlow : "hidden",
+  
+payemntPage: {
+  padding: "1rem 0",
+  width: "100%",
+  backgroundColor: "white",
+  overflowX: "hidden", // only hide horizontal overflow safely
+
+  [theme.breakpoints.down("sm")]: {
+    width: "100vw",      // real viewport width
+    maxWidth: "100%",
+    margin: 0,
+    padding: "0.5rem 0",
   },
+},
+
 
   paymentPage__container: {
     display: "flex",
@@ -263,27 +272,30 @@ const useStyles = makeStyles((theme) => ({
   },
 
   payemntAmount: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-end",
-    height: "fit-content",
-    padding: "1rem 0.5rem 0 0.5rem",
-    width: "40%",
-    [theme.breakpoints.down("sm")]: {
-      width: "90%",
-      padding: "2rem",
-    },
-  },
-  order_Details: {
-    display: "flex",
-    flexDirection: "column",
+  width: "38%",
+  minWidth: 0,
+
+  [theme.breakpoints.down("sm")]: {
     width: "100%",
-    padding: "2rem 0.5rem 2rem 0.5rem",
-    [theme.breakpoints.down("sm")]: {
-      width: "90%",
-      padding: "2rem",
-    },
+    margin: 0,
+    padding: 10,
   },
+},
+
+
+  order_Details: {
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  padding: "1rem 0",
+  boxSizing: "border-box",
+
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+    padding: "0 12px",   // small safe gutter like Flipkart
+  },
+},
+
   orderSub_heading: {
     fontWeight: "600",
     fontSize: "1.5rem",
