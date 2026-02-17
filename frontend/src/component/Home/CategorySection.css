@@ -1,100 +1,103 @@
 /* OUTER WRAPPER */
 .category_wrapper {
   width: 100%;
-  background: #fff;
-  padding: 14px 0;
-  overflow: hidden;
-  border-bottom: 1px solid #eee;
-  position: relative;
-  z-index: 2;
+  padding: 14px 10px;
+  background: #f3f4f6;
 }
 
-/* DEFAULT DESKTOP GRID */
-.category_section {
+/* MAIN CARD */
+.category_container_card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px 10px 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   max-width: 1400px;
   margin: auto;
+}
+
+/* TITLE */
+.category_title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+  color: #111;
+}
+
+/* DESKTOP GRID */
+.category_section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   gap: 20px;
   justify-items: center;
-  padding: 0 20px;
-  position: relative;
-  z-index: 2;
 }
 
-/* CATEGORY CARD */
+/* CARD */
 .category_card {
   text-decoration: none;
   color: #111;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform .25s ease;
+  transition: all .25s ease;
   min-width: 90px;
-  cursor: pointer;              /* ⭐ makes it clickable */
-  position: relative;
-  z-index: 5;                   /* ⭐ above motion layer */
 }
 
 .category_card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
 }
 
-/* ICON STYLE */
+/* ICON */
 .category_icon {
-  width: 74px;
-  height: 74px;
-  border-radius: 20px;
+  width: 78px;
+  height: 78px;
+  border-radius: 22px;
   background: linear-gradient(145deg,#f5f7ff,#ffffff);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
   margin-bottom: 8px;
-  pointer-events: none;         /* ⭐ allows click to pass to Link */
 }
 
 .category_icon img {
   width: 60px;
   height: 60px;
   object-fit: contain;
-  pointer-events: none;         /* ⭐ important */
 }
 
 .category_card p {
   font-size: 14px;
   font-weight: 500;
-  pointer-events: none;         /* ⭐ important */
 }
 
 /* =========================
-   📱 MOBILE SLIDER MODE
+   📱 MOBILE MODE (4 PER ROW SCROLL)
    ========================= */
 
 @media (max-width: 768px) {
 
-  .category_wrapper {
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .category_wrapper::-webkit-scrollbar {
-    display: none;
-  }
-
   .category_section {
     display: grid;
     grid-auto-flow: column;
-    grid-template-rows: repeat(2, 1fr);
-    grid-auto-columns: 95px;
-    gap: 16px 14px;
-    padding: 0 14px;
-    width: max-content;
+
+    /* ⭐ KEY PART → 4 items visible */
+    grid-auto-columns: calc(100vw / 4 - 16px);
+
+    grid-template-rows: repeat(2, auto);
+    gap: 14px 6px;
+    overflow-x: auto;
+    padding: 0 6px 4px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .category_section::-webkit-scrollbar {
+    display: none;
   }
 
   .category_card {
-    min-width: 90px;
+    scroll-snap-align: start;
   }
 
   .category_icon {
@@ -103,8 +106,8 @@
   }
 
   .category_icon img {
-    width: 52px;
-    height: 52px;
+    width: 50px;
+    height: 50px;
   }
 
   .category_card p {
