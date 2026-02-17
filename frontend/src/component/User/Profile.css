@@ -264,8 +264,10 @@
 
   .leftCotainer {
     width: 100%;
-    margin-top: 2rem;
-    margin-bottom: 0;
+    max-width: 100%;
+    margin: 0;
+    padding: 1.2rem;
+    border-radius: 20px;
   }
 
   .profileHeadingLeft {
@@ -349,14 +351,10 @@
 
   .leftCotainer {
     width: 100%;
-    margin-bottom: 1rem;
-    padding: 0;
-    order: -1;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); /* Same as right container */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Same shadow */
-    border-radius: 20px; /* Same border radius */
-    padding: 1.5rem; /* Same padding */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 100%;
+    margin: 0;
+    padding: 1.2rem;
+    border-radius: 20px;
   }
 
   .leftCotainer:hover {
