@@ -83,7 +83,7 @@
     grid-auto-flow: column;
 
     /* ⭐ KEY PART → 4 items visible */
-    grid-auto-columns: calc(100vw / 4 - 16px);
+    grid-auto-columns: calc(100vw / 3 - 16px);
 
     grid-template-rows: repeat(2, auto);
     gap: 14px 6px;
