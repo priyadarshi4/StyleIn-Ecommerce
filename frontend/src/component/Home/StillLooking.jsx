@@ -14,24 +14,34 @@ const StillLooking = () => {
   const rowRef = useRef();
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+  if (!isAuthenticated) return;
 
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get("/api/ai/reminders", {
-          withCredentials: true,
-        });
-        setProducts(data);
-      } catch (err) {
-        console.log("Reminder AI error:", err);
-      } finally {
-        setLoading(false);
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+
+      const res = await axios.get("/api/ai/reminders", {
+        withCredentials: true,
+      });
+
+      // ensure array only
+      if (Array.isArray(res.data)) {
+        setProducts(res.data);
+      } else {
+        setProducts([]);
       }
-    };
 
-    fetchData();
-  }, [isAuthenticated]);
+    } catch (err) {
+      console.log("AI reminder failed:", err?.response?.status);
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, [isAuthenticated]);
+
 
   const scroll = (direction) => {
     const scrollAmount = 320;
