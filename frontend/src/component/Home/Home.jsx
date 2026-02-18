@@ -16,7 +16,7 @@ import promoBanner from "../../Image/Cricket-wepon/6994672-uhd_3840_2160_30fps.m
 import SpinWheel from "./SpinWheel/SpinWheel";
 import promoBannerr from "../../Image/Cricket-wepon/video-Fashion-Business-Video-dd66f89e-9144-44b1-8d41-983956ae6edd.mp4";
 import CategorySection from "./CategorySection";
-
+import StillLooking from "./StillLooking";
 
 // Animation variants
 const sectionVariants = {
@@ -110,7 +110,7 @@ const promoProducts = shuffledProducts.slice(0, 4);
             >
               <HeroSlider />
             </motion.div>
-            
+            <StillLooking />
             <CategorySection />
             {/* FEATURED PRODUCTS */}
             <motion.section

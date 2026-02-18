@@ -1,0 +1,68 @@
+.still-wrapper {
+  background: #eef1f5;
+  padding: 20px;
+  border-radius: 18px;
+  margin: 25px 0;
+  position: relative;
+}
+
+.still-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.still-row {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.still-row::-webkit-scrollbar {
+  display: none;
+}
+
+.still-card {
+  min-width: 210px;
+  background: white;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.still-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.still-card:hover {
+  transform: translateY(-6px) scale(1.03);
+}
+
+.nav {
+  border: none;
+  background: white;
+  font-size: 24px;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  position: absolute;
+  z-index: 2;
+}
+
+.left { left: -10px; }
+.right { right: -10px; }

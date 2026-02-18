@@ -3,6 +3,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const asyncWrapper = require("../middleWare/asyncWrapper");
 const ApiFeatures = require("../utils/apiFeatures");
 const cloudinary = require("cloudinary");
+const UserActivity = require("../model/UserActivityModel");
 
 
 // >>>>>>>>>>>>>>>>>>>>> CREATE PRODUCT (ADMIN) >>>>>>>>>>>>>>>>>>>>>>
@@ -209,11 +210,25 @@ exports.getProductDetails = asyncWrapper(async (req, res, next) => {
     return next(new ErrorHandler("Product not found", 404));
   }
 
+  // ================= AI USER TRACKING =================
+  if (req.user) {
+    await UserActivity.create({
+      user: req.user._id,
+      product: product._id,
+      action: "view",
+    });
+    console.log("Activity Saved:", req.user._id, product._id);
+  } else {
+    console.log("No user found in request");
+  }
+  // ====================================================
+
   res.status(200).json({
     success: true,
     product,
   });
 });
+
 
 
 // >>>>>>>>>>>>>>>>>>>>> CREATE / UPDATE REVIEW >>>>>>>>>>>>>>>>>>>>>>
